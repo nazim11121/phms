@@ -1,0 +1,5 @@
+# Ignore Composer dependencies (PHP)
+/vendor/
+
+# Ignore npm or yarn dependencies (JavaScript)
+/node_modules/

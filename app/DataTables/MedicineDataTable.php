@@ -28,13 +28,16 @@ class MedicineDataTable extends DataTable
             ->addColumn('action', function ($item) {
                 $buttons = '';
                 if (auth()->user()->can('Edit User')) {
+                    $buttons .= '<a class="dropdown-item" href="' . route('admin.medicine.stock', $item->id) . '" title="Stock" onclick="openStockUpdateModal(this)" data-toggle="modal" data-target="#myStockUpdateModal" data-value="'.$item->id.'"><i class="mdi mdi-square-edit-outline"></i>' . __('custom.stock') . '</a>';
+                }
+                if (auth()->user()->can('Edit User')) {
                     $buttons .= '<a class="dropdown-item" href="' . route('admin.medicine.edit', $item->id) . '" title="Edit" onclick="openEditModal(this)" data-toggle="modal" data-target="#myEditModal" data-value="'.$item->id.'"><i class="mdi mdi-square-edit-outline"></i>' . __('custom.edit') . '</a>';
                 }
                 if (auth()->user()->can('Edit User')) {
                     $buttons .= '<form action="' . route('admin.medicine.destroy', $item->id) . '"  id="delete-form-' . $item->id . '" method="post">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="_method" value="DELETE">
-                    <button class="dropdown-item text-danger delete-list-data"  data-from-name="'. $item->name.'" data-from-id="' . $item->id . '"   Suplier="button" title="Delete"><i class="mdi mdi-trash-can-outline"></i> ' . __('custom.delete') . '</button></form>
+                    <button class="dropdown-item text-danger delete-list-data"  data-from-name="'. $item->name.'" data-from-id="' . $item->id . '"   type="button" title="Delete"><i class="mdi mdi-trash-can-outline"></i> ' . __('custom.delete') . '</button></form>
                     ';
                 }
 
@@ -44,10 +47,26 @@ class MedicineDataTable extends DataTable
                     ' . $buttons . '
                     </div>
                 </div>';
+            })->editColumn('group.name', function ($item) {
+                return $item->group->name ?? '';
             })->editColumn('brand.name', function ($item) {
                 return $item->brand->name ?? '';
+            })->editColumn('type.name', function ($item) {
+                return $item->type->name ?? '';
+            })->editColumn('suplier.name', function ($item) {
+                return $item->suplier->name ?? '';
+            })->editColumn('buying_price', function ($item) {
+                return $item->stock->buying_price ?? '';
+            })->editColumn('selling_price', function ($item) {
+                return $item->stock->selling_price ?? '';
+            })->editColumn('entry.date', function ($item) {
+                $date = date('d-m-Y', strtotime($item->stock->created_at));
+                return $date ?? '';
+            })->editColumn('expired.date', function ($item) {
+                $date = date('d-m-Y', strtotime($item->stock->expired_date));
+                return $date ?? '';
             })->editColumn('status', function ($item) {
-                $badge = $item->status == Suplier::STATUS_ACTIVE ? "badge-success" : "badge-danger";
+                $badge = $item->status == MedicineAdd::STATUS_ACTIVE ? "badge-success" : "badge-danger";
                 return '<span class="badge ' . $badge . '">' . Str::upper($item->status) . '</span>';
             })->rawColumns(['status', 'action'])->addIndexColumn();
     }
@@ -89,8 +108,16 @@ class MedicineDataTable extends DataTable
     {
         return [
             Column::computed('DT_RowIndex', __('custom.sl')),
-            Column::make('brand.name', 'brand.name')->title(__('Brand Name')),
             Column::make('name', 'name')->title(__('custom.name')),
+            Column::make('group.name', 'group.name')->title(__('Group')),
+            Column::make('brand.name', 'brand.name')->title(__('Brand')),
+            Column::make('type.name', 'type.name')->title(__('Type')),
+            Column::make('suplier.name', 'suplier.name')->title(__('Suplier')),
+            Column::make('available_stock', 'available_stock')->title(__('Stock(Pc)')),
+            Column::make('buying_price', 'buying_price')->title(__('Buying P')),
+            Column::make('selling_price', 'selling_price')->title(__('Selling P')),
+            Column::make('entry.date', 'entry.date')->title(__('Entry Date')),
+            Column::make('expired.date', 'expired.date')->title(__('Expired Date')),
             Column::make('status', 'status')->title(__('custom.status')),
         ];
     }

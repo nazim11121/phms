@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin\Medicine;
 
 Use Auth;
 use League\Csv\Writer;
+use App\Models\Type;
 use App\Models\Brand;
+use App\Models\Group;
+use App\Models\Stock;
 use App\Models\Suplier;
 use App\Models\MedicineAdd;
 use Illuminate\Support\Str;
@@ -53,8 +56,12 @@ class MedicineController extends Controller
     {
         set_page_meta(__t('add') . ' ' . __t('medicine'));
 
+        $groups = Group::where('status','Active')->get();
         $brands = Brand::where('status','Active')->get();
-        return view('admin.medicine.create', compact('brands'));
+        $types = Type::where('status','Active')->get();
+        $supliers = Suplier::where('status','Active')->get();
+
+        return view('admin.medicine.create', compact('groups','brands','types','supliers'));
     }
 
     /*
@@ -65,27 +72,48 @@ class MedicineController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name'        => 'required',
-            'brand_name'  => 'required',
-            'mobile'      => 'required',
-            'email'       => 'nullable', 
+            'name'          => 'required',
+            'group_id'      => 'required',
+            'brand_id'      => 'required',
+            'type_id'       => 'required',
+            'suplier_id'    => 'nullable', 
+            'quantity'      => 'required', 
+            'buying_price'  => 'nullable', 
+            'selling_price' => 'required', 
+            'expired_date'  => 'nullable',
+            'status'  => 'nullable',
         ]);
 
-        $suplier = new Medicine();
-        $suplier->name = $request->name;
-        $suplier->brand_name = $request->brand_name;
-        $suplier->mobile = $request->mobile;
-        $suplier->email = $request->email;
-        $suplier->created_by = Auth::id();
-        $suplier->save();
+        $medicineAdd = new MedicineAdd();
+        $medicineAdd->name = $request->name;
+        $medicineAdd->group_id = $request->group_id;
+        $medicineAdd->brand_id = $request->brand_id;
+        $medicineAdd->type_id = $request->type_id;
+        $medicineAdd->suplier_id = $request->suplier_id;
+        $medicineAdd->available_stock = $request->quantity;
+        $medicineAdd->buying_price = $request->buying_price;
+        $medicineAdd->selling_price = $request->selling_price;
+        $medicineAdd->expired_date = $request->expired_date;
+        $medicineAdd->created_by = Auth::id();
+        $medicineAdd->save();
+
+        $stock = new Stock();
+        $stock->medicine_id = $medicineAdd->id;
+        $stock->previous = 0;
+        $stock->new = $request->quantity;
+        $stock->available_stock = $request->quantity;
+        $stock->selling_price = $request->selling_price;
+        $stock->expired_date = $stock->expired_date;
+        $stock->created_by = Auth::id();
+        $stock->save();
        
-        if (!empty($suplier)) {
-            flash(__t('suplier_create_successful'))->success();
+        if (!empty($medicineAdd)) {
+            flash(__t('medicine_create_successful'))->success();
         } else {
-            flash(__t('suplier_create_failed'))->error();
+            flash(__t('medicine_create_failed'))->error();
         }
 
-        return redirect()->route('admin.suplier.index');
+        return redirect()->route('admin.medicine.index');
     }
 
     /**
@@ -107,45 +135,69 @@ class MedicineController extends Controller
 
     public function edit($id)
     {
-        set_page_meta(__t('edit') . ' ' . __t('suplier'));
-        $suplier = Suplier::find($id);
+        set_page_meta(__t('edit') . ' ' . __t('medicine'));
+
+        $medicine = MedicineAdd::with('stock')->find($id);
+        $groups = Group::where('status','Active')->get();
         $brands = Brand::where('status','Active')->get();
-        return response()->json(['suplier'=>$suplier,'brands'=>$brands]);
+        $types = Type::where('status','Active')->get();
+        $supliers = Suplier::where('status','Active')->get();
+
+        return response()->json(['medicine'=>$medicine,'groups'=>$groups,'brands'=>$brands,'types'=>$types,'supliers'=>$supliers]);
     }
 
     public function update(Request $request): RedirectResponse
     {
-        
         $request->validate([
-            'name'      => 'required', 
-            'brand_name'  => 'required',
-            'mobile'      => 'required',
-            'email'       => 'nullable', 
-            'status'    => 'nullable', 
+            'name'        => 'required',
+            'group_id'    => 'required',
+            'brand_id'    => 'required',
+            'type_id'     => 'required',
+            'suplier_id'  => 'nullable', 
+            'quantity'    => 'required', 
+            'buying_price'  => 'nullable', 
+            'selling_price'  => 'required', 
+            'expired_date'  => 'nullable',
+            'status'  => 'nullable',
         ]);
-
-        $suplier = Suplier::findorfail($request->id);
         
         if($request->status){
             $status = $request->status;
         }else{
             $status = 'Inactive';
         }
-        $suplier->name = $request->name;
-        $suplier->brand_name = $request->brand_name;
-        $suplier->mobile = $request->mobile;
-        $suplier->email = $request->email;
-        $suplier->status = $status;
-        $suplier->updated_by = Auth::id();
-        $suplier->save();
+
+        $medicineAdd = MedicineAdd::findorfail($request->id);
+        $medicineAdd->name = $request->name;
+        $medicineAdd->group_id = $request->group_id;
+        $medicineAdd->brand_id = $request->brand_id;
+        $medicineAdd->type_id = $request->type_id;
+        $medicineAdd->suplier_id = $request->suplier_id;
+        $medicineAdd->available_stock = $request->quantity;
+        $medicineAdd->buying_price = $request->buying_price;
+        $medicineAdd->selling_price = $request->selling_price;
+        $medicineAdd->expired_date = $request->expired_date;
+        $medicineAdd->status = $status;
+        $medicineAdd->updated_by = Auth::id();
+        $medicineAdd->save();
         
-        if (!empty($suplier)) {
-            flash(__t('suplier_update_successful'))->success();
+        $stockId = Stock::where('medicine_id',$medicineAdd->id)->get()->pluck('id')->first();
+        $stock = Stock::findorfail($stockId);
+        $stock->previous = 0;
+        $stock->new = $request->quantity;
+        $stock->available_stock = $request->quantity;
+        $stock->selling_price = $request->selling_price;
+        $stock->expired_date = $stock->expired_date;
+        $stock->updated_by = Auth::id();
+        $stock->save();
+        
+        if (!empty($stock)) {
+            flash(__t('medicine_update_successful'))->success();
         } else {
-            flash(__t('suplier_update_failed'))->error();
+            flash(__t('medicine_update_failed'))->error();
         }
 
-        return redirect()->route('admin.suplier.index');
+        return redirect()->route('admin.medicine.index');
     }
 
     /**
@@ -154,11 +206,55 @@ class MedicineController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        if (MedicineAdd::find($id)->delete()) {
+        $stocks = Stock::where('medicine_id',$id)->get();
+        foreach($stocks as $value){
+            $stock = Stock::find($value->id);
+            $stock->delete();
+        }
+
+        MedicineAdd::find($id)->delete();
+
+        if ($stock) {
             
-            flash(__('custom.medicine_deleted_successfully'))->success();
+            flash(__t('medicine_deleted_successfully'))->success();
         } else {
-            flash(__('custom.medicine_delete_failed'))->error();
+            flash(__t('medicine_delete_failed'))->error();
+        }
+
+        return redirect()->route('admin.medicine.index');
+    }
+
+    public function stock($id)
+    {
+        set_page_meta(__t('edit') . ' ' . __t('stock'));
+
+        $medicine = MedicineAdd::with('stock')->find($id);
+
+        return response()->json(['medicine'=>$medicine]);
+    }
+
+    public function stockUpdate(Request $request)
+    { 
+        $medicine = MedicineAdd::find($request->id);
+        $medicine->available_stock = $request->available_stock+$request->new;
+        $medicine->save();
+
+        $stockId = Stock::where('medicine_id',$request->id)->get()->first(); 
+        $stockUpdate = new Stock();
+        $stockUpdate->medicine_id = $request->id;
+        $stockUpdate->previous = $request->available_stock;
+        $stockUpdate->new = $request->new;
+        $stockUpdate->available_stock = $request->available_stock+$request->new;
+        $stockUpdate->expired_date = $request->expired_date;
+        $stockUpdate->buying_price = $request->buying_price;
+        $stockUpdate->selling_price = $request->selling_price;
+        $stockUpdate->save();
+
+        if ($stockUpdate) {
+            
+            flash(__t('stock_updated_successfully'))->success();
+        } else {
+            flash(__t('stock_update_failed'))->error();
         }
 
         return redirect()->route('admin.medicine.index');

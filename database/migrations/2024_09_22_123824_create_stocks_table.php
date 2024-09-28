@@ -19,7 +19,9 @@ class CreateStocksTable extends Migration
             $table->string('previous')->nullable();
             $table->string('new')->nullable();
             $table->string('available_stock')->nullable();
+            $table->string('buying_price')->nullable();
             $table->string('selling_price')->nullable();
+            $table->string('expired_date')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users', 'id')->onDelete('set null');
             $table->foreignId('updated_by')->nullable()->constrained('users', 'id')->onDelete('set null');
             $table->timestamps();

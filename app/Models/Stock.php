@@ -10,8 +10,8 @@ class Stock extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function medicineName()
+    public function medicine()
     {
-        return $this->belongsTo(Medicine::class, 'medicine_id', 'id');
+        return $this->belongsTo(MedicineAdd::class, 'medicine_id', 'id');
     }
 }

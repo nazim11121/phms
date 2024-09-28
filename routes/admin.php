@@ -42,7 +42,10 @@ Route::namespace('Admin')->prefix('admin')->as('admin.')->middleware(['auth','is
     Route::post('suplier/data/update', 'Suplier\SuplierController@update')->name('suplier.data.update');
     // Medicine Add
     Route::resource('medicine', Medicine\MedicineController::class);
-
+    Route::post('medicine/data/update', 'Medicine\MedicineController@update')->name('medicine.data.update');
+    Route::get('medicine/stock/{id}', 'Medicine\MedicineController@stock')->name('medicine.stock');
+    Route::post('medicine/stock/update', 'Medicine\MedicineController@stockUpdate')->name('medicine.stock.update');
+   
     // account
     Route::get('account/credited', 'Account\AccountController@credited')->name('account.credited');
     Route::post('account/credited-data', 'Account\AccountController@creditedData')->name('account.creditedData');

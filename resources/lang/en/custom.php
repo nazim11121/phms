@@ -633,6 +633,7 @@ return [
     'staff_salary_deleted_successful'   => 'Staff Salary Deleted Successfully',
     'staff_salary_deleted_failed'       => 'Staff Salary Deleted Failed',
 
+    'group' => 'Group',
     'group_list' => 'Group Name List',
     'add_group'  => 'Add Group Name',
     'edit_group' => 'Edit Group Name',
@@ -643,6 +644,7 @@ return [
     'group_deleted_successfully'  => 'Group Name Deleted Successfully',
     'group_deleted_failed'        => 'Group Name Deleted Failed',
     
+    'brand' => 'Brand',
     'brand_list' => 'Brand Name List',
     'add_brand'  => 'Add Brand Name',
     'edit_brand' => 'Edit Brand Name',
@@ -653,6 +655,7 @@ return [
     'brand_deleted_successfully'  => 'Brand Name Deleted Successfully',
     'brand_deleted_failed'        => 'Brand Name Deleted Failed',
 
+    'type' => 'Type',
     'type_list' => 'Type List',
     'add_type'  => 'Add Name',
     'edit_type' => 'Edit Name',
@@ -663,6 +666,7 @@ return [
     'type_deleted_successfully'  => 'Type Deleted Successfully',
     'type_deleted_failed'        => 'Type Deleted Failed',
 
+    'suplier' => 'Suplier',
     'suplier_list' => 'Suplier List',
     'add_suplier'  => 'Add Suplier',
     'edit_suplier' => 'Edit Suplier',
@@ -673,15 +677,20 @@ return [
     'suplier_deleted_successfully'  => 'Suplier Deleted Successfully',
     'suplier_deleted_failed'        => 'Suplier Deleted Failed',
 
+    'medicine' => 'Medicine',
     'medicine_list' => 'Medicine List',
     'add_medicine'  => 'Add Medicine',
     'edit_medicine' => 'Edit Medicine',
-    'medicine_create_successful'     => 'New Medicine Created Successfully',
-    'medicine_create_failed'         => 'New Medicine Create Failed',
+    'medicine_create_successful'     => 'New Medicine Added Successfully',
+    'medicine_create_failed'         => 'New Medicine Add Failed',
     'medicine_update_successful'     => 'Medicine Updated Successfully',
     'medicine_update_failed'         => 'Medicine Updated Failed',
     'medicine_deleted_successfully'  => 'Medicine Deleted Successfully',
     'medicine_deleted_failed'        => 'Medicine Deleted Failed',
+
+    'stock_update'  => 'Stock Update',
+    'stock_updated_successfully'     => 'Stock Updated Successfully',
+    'stock_update_failed'            => 'Stock Update Failed',
 
     'expense_create_successful'     => 'Expense Created Successfully',
     'expense_create_failed'         => 'Expense Create Failed',

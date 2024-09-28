@@ -30,9 +30,20 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Group Name <span class="requiredStar"> *</span></label>
+                                <div class="col-sm-7">
+                                    <select class="form-control select2" name="group_id" id="group_id" required>
+                                        <option value="">Select One...</option>
+                                        @foreach($groups as $value)
+                                            <option value="{{$value->id}}">{{$value->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Brand Name <span class="requiredStar"> *</span></label>
                                 <div class="col-sm-7">
-                                    <select class="form-control select2" name="brand_name" id="brand_name">
+                                    <select class="form-control select2" name="brand_id" id="brand_id" required>
                                         <option value="">Select One...</option>
                                         @foreach($brands as $value)
                                             <option value="{{$value->id}}">{{$value->name}}</option>
@@ -41,15 +52,49 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Mobile <span class="requiredStar"> *</span></label>
+                                <label class="col-sm-3 col-form-label">Type <span class="requiredStar"> *</span></label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="mobile" id="mobile" required>
+                                    <select class="form-control select2" name="type_id" id="type_id" required>
+                                        <option value="">Select One...</option>
+                                        @foreach($types as $value)
+                                            <option value="{{$value->id}}">{{$value->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Email</label>
+                                <label class="col-sm-3 col-form-label">Suplier</label>
                                 <div class="col-sm-7">
-                                    <input type="email" class="form-control" name="email" id="email">
+                                    <select class="form-control select2" name="suplier_id" id="suplier_id">
+                                        <option value="">Select One...</option>
+                                        @foreach($supliers as $value)
+                                            <option value="{{$value->id}}">{{$value->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Quantity <span class="requiredStar"> *</span></label>
+                                <div class="col-sm-7">
+                                    <input type="number" class="form-control" name="quantity" id="quantity" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Buying Price</label>
+                                <div class="col-sm-7">
+                                    <input type="number" class="form-control" name="buying_price" id="buying_price">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Selling Price <span class="requiredStar"> *</span></label>
+                                <div class="col-sm-7">
+                                    <input type="number" class="form-control" name="selling_price" id="selling_price" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Expired Date </label>
+                                <div class="col-sm-3">
+                                    <input type="date" class="form-control" name="expired_date" id="expired_date">
                                 </div>
                             </div>
                             <div class="form-group row">

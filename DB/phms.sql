@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 26, 2024 at 05:40 PM
+-- Generation Time: Sep 28, 2024 at 04:40 PM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.18
 
@@ -244,18 +244,22 @@ CREATE TABLE IF NOT EXISTS `ic_medicine_adds` (
   `group_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `brand_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `quantity` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `buying_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `selling_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `available_stock` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `suplier_id` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `expired_date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Active',
   `created_by` bigint UNSIGNED DEFAULT NULL,
   `updated_by` bigint UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ic_medicine_adds`
+--
+
+INSERT INTO `ic_medicine_adds` (`id`, `name`, `group_id`, `brand_id`, `type_id`, `available_stock`, `suplier_id`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(3, 'Napa Extend', '1', '1', '1', '510', '1', 'Active', 1, 1, '2024-09-28 04:56:01', '2024-09-28 16:25:00');
 
 -- --------------------------------------------------------
 
@@ -1010,13 +1014,23 @@ CREATE TABLE IF NOT EXISTS `ic_stocks` (
   `previous` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `new` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `available_stock` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `buying_price` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `selling_price` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `expired_date` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` bigint UNSIGNED DEFAULT NULL,
   `updated_by` bigint UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ic_stocks`
+--
+
+INSERT INTO `ic_stocks` (`id`, `medicine_id`, `previous`, `new`, `available_stock`, `buying_price`, `selling_price`, `expired_date`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, '3', '0', '500', '500', '3', '4', '2024-09-27', 1, 1, '2024-09-28 04:56:01', '2024-09-28 06:02:16'),
+(6, '3', '500', '10', '510', '11', '12', '2024-09-29', NULL, NULL, '2024-09-28 16:25:00', '2024-09-28 16:25:00');
 
 -- --------------------------------------------------------
 

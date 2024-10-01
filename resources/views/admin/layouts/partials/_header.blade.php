@@ -75,7 +75,7 @@
             </li>
         </ul>
         <div class="nav-btn ml-8">
-            <a href="{{route('admin.new.order.create')}}" class="btn btn-success">+ New Invoice</a>
+            <a href="{{route('admin.invoice.create')}}" class="btn btn-success">+ New Invoice</a>
         </div>
     </nav>
 </div>

@@ -692,6 +692,9 @@ return [
     'stock_updated_successfully'     => 'Stock Updated Successfully',
     'stock_update_failed'            => 'Stock Update Failed',
 
+    'invoice'  => 'Invoice',
+    'add_invoice'  => 'Add Invoice',
+    
     'expense_create_successful'     => 'Expense Created Successfully',
     'expense_create_failed'         => 'Expense Create Failed',
 

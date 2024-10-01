@@ -45,7 +45,10 @@ Route::namespace('Admin')->prefix('admin')->as('admin.')->middleware(['auth','is
     Route::post('medicine/data/update', 'Medicine\MedicineController@update')->name('medicine.data.update');
     Route::get('medicine/stock/{id}', 'Medicine\MedicineController@stock')->name('medicine.stock');
     Route::post('medicine/stock/update', 'Medicine\MedicineController@stockUpdate')->name('medicine.stock.update');
-   
+    // Invoice
+    Route::resource('invoice', Invoice\InvoiceController::class);
+    Route::post('invoice/data/add-to-cart', 'Invoice\InvoiceController@addToCart')->name('invoice.add-to-cart');
+    
     // account
     Route::get('account/credited', 'Account\AccountController@credited')->name('account.credited');
     Route::post('account/credited-data', 'Account\AccountController@creditedData')->name('account.creditedData');

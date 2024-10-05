@@ -17,10 +17,6 @@
     .submit_btn{
         border-radius: 25px;
     }
-    .ic_main_form_inner .form_box img {
-        max-width: 280px;
-        margin-bottom: 7px
-    }
     .ic_main_form_area::before{
         background: white!important;
     }

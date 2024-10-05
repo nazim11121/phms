@@ -8,7 +8,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="float-left header-title">{{ __t('suplier_list') }}</h4>
+                <h4 class="float-left header-title">{{ __t('supplier_list') }}</h4>
                 {!! $dataTable->table() !!}
             </div>
         </div>
@@ -19,7 +19,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ __t('edit_suplier') }}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{ __t('edit_supplier') }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -30,7 +30,7 @@
             <div class="row">
                 
                 <div class="form-group col-sm-6 mt-2">
-                    <label for="name">Suplier Name <span class="requiredStar"> *</span></label>
+                    <label for="name">Supplier Name <span class="requiredStar"> *</span></label>
                     <input type="text" class="form-control" name="name" id="name2" required>
                     @error('name')
                     <p class="error">{{ $message }}</p>

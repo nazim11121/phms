@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 28, 2024 at 04:40 PM
+-- Generation Time: Oct 05, 2024 at 10:58 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.18
 
@@ -234,6 +234,73 @@ INSERT INTO `ic_groups` (`id`, `name`, `status`, `created_by`, `updated_by`, `cr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ic_invoices`
+--
+
+DROP TABLE IF EXISTS `ic_invoices`;
+CREATE TABLE IF NOT EXISTS `ic_invoices` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `invoice_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `discount_percentage` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `discount_amount` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `delivery_charge` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `grand_total` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payable_amount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `due` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `payment_method` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Unpaid',
+  `customer_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_mobile` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` bigint UNSIGNED DEFAULT NULL,
+  `updated_by` bigint UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ic_invoices`
+--
+
+INSERT INTO `ic_invoices` (`id`, `invoice_no`, `total`, `discount_percentage`, `discount_amount`, `delivery_charge`, `grand_total`, `payable_amount`, `due`, `payment_method`, `payment_status`, `customer_name`, `customer_mobile`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(25, '241005856', '60.00', '10', '6', '0', '54.00', '54', '0', 'Cash', 'Paid', 'Mohi', '0198765432', 1, NULL, '2024-10-05 06:39:21', '2024-10-05 06:39:21'),
+(40, '241005714', '30.00', '10', '3', '0', '27.00', '27', '0', 'Cash', 'Paid', 'Morshed', '0198765432', 1, NULL, '2024-10-05 07:28:24', '2024-10-05 07:28:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ic_invoice_skus`
+--
+
+DROP TABLE IF EXISTS `ic_invoice_skus`;
+CREATE TABLE IF NOT EXISTS `ic_invoice_skus` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `invoice_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtotal` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` bigint UNSIGNED DEFAULT NULL,
+  `updated_by` bigint UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ic_invoice_skus`
+--
+
+INSERT INTO `ic_invoice_skus` (`id`, `invoice_id`, `product_id`, `price`, `quantity`, `subtotal`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(36, '25', '3', '12', '3', '36', 1, NULL, '2024-10-05 06:39:21', '2024-10-05 06:39:21'),
+(37, '25', '6', '12', '2', '24', 1, NULL, '2024-10-05 06:39:21', '2024-10-05 06:39:21'),
+(54, '40', '3', '12', '2', '24', 1, NULL, '2024-10-05 07:28:24', '2024-10-05 07:28:24'),
+(55, '40', '7', '6', '1', '6', 1, NULL, '2024-10-05 07:28:24', '2024-10-05 07:28:24');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ic_medicine_adds`
 --
 
@@ -252,14 +319,17 @@ CREATE TABLE IF NOT EXISTS `ic_medicine_adds` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_medicine_adds`
 --
 
 INSERT INTO `ic_medicine_adds` (`id`, `name`, `group_id`, `brand_id`, `type_id`, `available_stock`, `suplier_id`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(3, 'Napa Extend', '1', '1', '1', '510', '1', 'Active', 1, 1, '2024-09-28 04:56:01', '2024-09-28 16:25:00');
+(3, 'Napa Extend', '1', '1', '1', '505', '1', 'Active', 1, 1, '2024-09-28 04:56:01', '2024-10-05 08:50:08'),
+(5, 'Rapid', '1', '3', '1', '2', '1', 'Active', 1, NULL, '2024-10-01 16:34:01', '2024-10-05 08:09:25'),
+(6, 'Plain Napa', '1', '1', '1', '10', '1', 'Active', 1, NULL, '2024-10-01 17:11:17', '2024-10-05 08:09:41'),
+(7, 'Aci clofenac', '1', '3', '1', '2', '1', 'Active', 1, NULL, '2024-10-01 17:12:02', '2024-10-05 07:28:24');
 
 -- --------------------------------------------------------
 
@@ -1022,15 +1092,19 @@ CREATE TABLE IF NOT EXISTS `ic_stocks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_stocks`
 --
 
 INSERT INTO `ic_stocks` (`id`, `medicine_id`, `previous`, `new`, `available_stock`, `buying_price`, `selling_price`, `expired_date`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '3', '0', '500', '500', '3', '4', '2024-09-27', 1, 1, '2024-09-28 04:56:01', '2024-09-28 06:02:16'),
-(6, '3', '500', '10', '510', '11', '12', '2024-09-29', NULL, NULL, '2024-09-28 16:25:00', '2024-09-28 16:25:00');
+(1, '3', '0', '500', '500', '3', '4', '2024-09-27', 1, 1, '2024-09-28 04:56:01', '2024-10-03 16:21:00'),
+(6, '3', '500', '10', '506', '11', '12', '2024-09-29', NULL, NULL, '2024-09-28 16:25:00', '2024-10-05 08:50:08'),
+(7, '5', '0', '2', '2', '10', '14', '2024-10-02', 1, NULL, '2024-10-01 16:34:01', '2024-10-05 08:09:25'),
+(8, '6', '0', '2', '0', '2', '4', '2024-09-30', 1, NULL, '2024-10-01 17:11:17', '2024-10-05 06:22:52'),
+(9, '7', '0', '3', '2', '4', '6', '2024-10-02', 1, NULL, '2024-10-01 17:12:02', '2024-10-05 07:28:24'),
+(10, '6', '0', '10', '10', '10', '12', '2024-10-06', NULL, NULL, '2024-10-05 06:32:29', '2024-10-05 08:09:41');
 
 -- --------------------------------------------------------
 
@@ -49363,7 +49437,7 @@ INSERT INTO `ic_system_settings` (`id`, `settings_key`, `settings_value`, `creat
 (2, 'paypal', '{\"paypal.baseUrl\":\"https:\\/\\/api-m.sandbox.paypal.com\\/v1\\/\",\"paypal.clientId\":\"AQPmEPhGLyOoMjjZ0Tmp-Ogs3ELCV0_OhQwmU5VrUV-X81TkWIrKd7_RhSR-6LhlPjHRUhKwAwSgY4v8\",\"paypal.secret\":\"ENHsEIGqf632C0G-lvkAgF7R9hS8WmtpaauQSBCPIbED4JGi5Z2vMY50tDHgaqcWTqZB36fN5hE2yJOY\"}', '2021-11-09 13:22:44', '2021-12-18 20:27:03'),
 (3, 'stripe', '{\"stripe.public_key\": \"pk_test_arr20NMmOPBNJWZCNBvTZib8\", \"stripe.secret_key\": \"sk_test_LJW4xs0DJs7SaxtDGbPhmhVC\"}', '2021-11-09 13:22:44', '2021-11-09 15:38:54'),
 (4, 'mail', '{\"mail.mailers.smtp.host\":\"smtp.mailtrap.io\",\"mail.mailers.smtp.port\":\"2525\",\"mail.mailers.smtp.encryption\":null,\"mail.mailers.smtp.username\":\"6cc148779dd1ca\",\"mail.mailers.smtp.password\":\"b030652c65de17\",\"mail.from.address\":\"info@itclanbd.com\",\"mail.from.name\":\"itclanbd\"}', '2021-11-09 14:08:43', '2023-03-20 05:25:35'),
-(5, 'general', '{\"site_title\":\"Pharmacy Management System\",\"timezone\":\"Asia\\/Dhaka\",\"currency_symbol\":\"\\u09f3\",\"default_tax\":\"0\",\"default_language\":\"en\",\"primary_color\":\"#13151f\",\"secondary_color\":\"#0bb5c1\",\"is_logo_show_in_invoice\":\"yes\",\"store_name\":\"Nova Pharmacy\",\"store_address\":null,\"store_mobile\":null,\"store_website\":null,\"invoice_footer\":null,\"login_message_system\":\"Welcome To Restaurant Management Software\",\"site_logo\":\"http:\\/\\/127.0.0.1:8000\\/storage\\/settings\\/17269458041149.jpeg\",\"favicon\":\"http:\\/\\/127.0.0.1:8000\\/storage\\/settings\\/17269458046746.jpeg\",\"login_background\":\"https:\\/\\/restaurant.kikinbo.com\\/public\\/storage\\/settings\\/17252822594069.JPG\"}', '2021-12-18 20:27:03', '2024-09-22 05:18:17'),
+(5, 'general', '{\"site_title\":\"Pharmacy Management System\",\"timezone\":\"Asia\\/Dhaka\",\"currency_symbol\":\"\\u09f3\",\"default_tax\":\"0\",\"default_language\":\"en\",\"primary_color\":\"#13151f\",\"secondary_color\":\"#0bb5c1\",\"is_logo_show_in_invoice\":\"yes\",\"store_name\":\"Nova Pharmacy\",\"store_address\":\"Mirpur-12, Dhaka\",\"store_mobile\":\"01738305885\",\"store_website\":null,\"invoice_footer\":null,\"login_message_system\":\"Welcome To Restaurant Management Software\",\"site_logo\":\"http:\\/\\/127.0.0.1:8000\\/storage\\/settings\\/17269458041149.jpeg\",\"favicon\":\"http:\\/\\/127.0.0.1:8000\\/storage\\/settings\\/17269458046746.jpeg\",\"login_background\":\"https:\\/\\/restaurant.kikinbo.com\\/public\\/storage\\/settings\\/17252822594069.JPG\"}', '2021-12-18 20:27:03', '2024-10-05 07:25:20'),
 (0, 'product_setting', '{\"sku.auto\":\"yes\",\"sku.editable\":\"yes\",\"sku.prefix\":null,\"sku.suffix\":null}', '2023-03-20 05:25:35', '2023-03-20 05:25:35');
 
 -- --------------------------------------------------------

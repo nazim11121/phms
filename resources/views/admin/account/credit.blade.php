@@ -13,7 +13,7 @@
                 <div>
                     <h4 class="header-title">{{ __('Total Credited') }}</h4><br>
                 </div>
-                <div id="printSection">
+                <div class="table-responsive" id="printSection">
                     <!-- <div class="text-center mt-4">
                         <h4 style="text-align:center;">Dhoya Restaurant</h4>
                         <h5 style="text-align:center;">RC Street, Court Para</h5>
@@ -24,10 +24,7 @@
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th style="text-align:center">New Order</th>
-                                <th style="text-align:center">Table Order</th>
-                                <th style="text-align:center">Parcel Order</th>
-                                <th style="text-align:center">Delivery Order</th>
+                                <th style="text-align:center">Invoice</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,37 +35,7 @@
                                         @php $sum=0; @endphp
                                         @foreach($orderData as $data)
                                             
-                                            @if($value->date==$data->date2 && $data->order_type=="New Order")
-                                                @php $sum = $sum + $data->grand_total; @endphp
-                                            @endif
-                                        @endforeach
-                                        {{$sum}} 
-                                    </td>
-                                    <td style="text-align:center">
-                                        @php $sum=0; @endphp
-                                        @foreach($orderData as $data)
-                                            
-                                            @if($value->date==$data->date2 && $data->order_type=="Table Order")
-                                                @php $sum = $sum + $data->grand_total; @endphp
-                                            @endif
-                                        @endforeach
-                                        {{$sum}} 
-                                    </td>
-                                    <td style="text-align:center">
-                                        @php $sum=0; @endphp
-                                        @foreach($orderData as $data)
-                                            
-                                            @if($value->date==$data->date2 && $data->order_type=="Parcel Order")
-                                                @php $sum = $sum + $data->grand_total; @endphp
-                                            @endif
-                                        @endforeach
-                                        {{$sum}} 
-                                    </td>
-                                    <td style="text-align:center">
-                                        @php $sum=0; @endphp
-                                        @foreach($orderData as $data)
-                                            
-                                            @if($value->date==$data->date2 && $data->order_type=="Delivery Order")
+                                            @if($value->date==$data->date2)
                                                 @php $sum = $sum + $data->grand_total; @endphp
                                             @endif
                                         @endforeach
@@ -79,9 +46,6 @@
                                 <tr>
                                     <td><h6>Total</h6></td>
                                     <td style="text-align:center"><span>৳ </span>{{$newTotal}}</td>
-                                    <td style="text-align:center"><span>৳ </span>{{$tableTotal}}</td>
-                                    <td style="text-align:center"><span>৳ </span>{{$parcelTotal}}</td>
-                                    <td style="text-align:center"><span>৳ </span>{{$deliveryTotal}}</td>
                                 </tr>
                         </tbody>
                     </table>

@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Expense;
 use App\Services\Dashboard\DashboardService;
 use Carbon\Carbon;
-use App\Models\Order;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
@@ -41,10 +41,10 @@ class DashboardController extends Controller
         $authUser = auth()->user();
         $currentDate = Carbon::now()->toDateString();
 
-        $data['total_order']     = make2digits(Order::whereDate('created_at', $currentDate)->count());
-        $data['total_amount']    = make2digits(Order::where('payment_status','paid')->whereDate('created_at', $currentDate)->sum('grand_total'));
-        $data['total_expense']   = make2digits(Expense::sum('amount'));
-        $data['total_sale']      = make2digits(Order::sum('payable_amount'));
+        $data['total_order']     = make2digits(Invoice::whereDate('created_at', $currentDate)->count());
+        $data['total_amount']    = make2digits(Invoice::where('payment_status','paid')->whereDate('created_at', $currentDate)->sum('payable_amount'));
+        $data['total_expense']   = make2digits(Expense::whereDate('created_at', $currentDate)->sum('amount'));
+        $data['total_sale']      = make2digits(Invoice::whereDate('created_at', $currentDate)->sum('payable_amount'));
         
         if($data['total_sale']>$data['total_expense']){
             $data['total_profit']  = $data['total_sale'] - $data['total_expense'];
@@ -54,15 +54,15 @@ class DashboardController extends Controller
         
         
         $data['total_customer']  = make2digits(User::where('user_type','Customer')->count());
-        $data['todays_order']    = make2digits(Order::whereDate('created_at', $currentDate)->count());
-        // $data['todays_income']   = make2digits(Order::whereDate('payment_date', $currentDate)->sum('paid_amount'));
+        $data['todays_order']    = make2digits(Invoice::whereDate('created_at', $currentDate)->count());
+        // $data['todays_income']   = make2digits(Invoice::whereDate('payment_date', $currentDate)->sum('paid_amount'));
 
-        $data['total_pending_order']    = make2digits(Order::where('status', 'Pending')->count());
-        $data['total_delivered_order']  = make2digits(Order::where('status', 'Delivered')->count());
-        $data['total_order_amount']     = make2digits(Order::sum('total'));
+        // $data['total_pending_order']    = make2digits(Invoice::where('status', 'Pending')->count());
+        // $data['total_delivered_order']  = make2digits(Invoice::where('status', 'Delivered')->count());
+        $data['total_order_amount']     = make2digits(Invoice::sum('total'));
        
 
-        $orderList = Order::with('orderSku')->where('payment_status','Unpaid')->whereDate('created_at', $currentDate)->orderBy('id', 'DESC')->paginate(10);
+        $orderList = Invoice::with('sku')->where('payment_status','Unpaid')->whereDate('created_at', $currentDate)->orderBy('id', 'DESC')->paginate(10);
         set_page_meta('Dashboard');
         return view('admin.dashboard.index', compact('orderList','data'));
     }

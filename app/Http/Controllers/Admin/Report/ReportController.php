@@ -10,6 +10,7 @@ use App\Models\Customer;
 use League\Csv\Writer;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\SystemSettings;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -50,18 +51,23 @@ class ReportController extends Controller
      */
 
     public function dayWise(){
-        return view('admin.report.daywise');
+
+        $settings = SystemSettings::all();
+        $shopName = $settings[3]['settings_value']['store_name'];
+        $shopMobile = $settings[3]['settings_value']['store_mobile'];
+        $shopAddress = $settings[3]['settings_value']['store_address'];
+
+        return view('admin.report.daywise', compact('shopName','shopMobile','shopAddress'));
     }
 
     public function getReportData(Request $request)
     {
         $startDate = $request->start_date;
-        // $reports = Order::with('orderSku','orderSku.categoryName')->whereDate('created_at', $startDate)->get();
-        $reports = OrderSKu::whereDate('created_at', '>=', $startDate)->get();
-
+        $report = OrderSku::whereDate('order_skus.created_at', '=', $startDate)->get(); 
+        
         $orderCategory = DB::table('order_skus')->join('categories','categories.id','=','order_skus.category_id')
         ->select('categories.name',DB::raw('category_id as category'))
-        ->whereDate('order_skus.created_at', '>=', $startDate)
+        ->whereDate('order_skus.created_at', '=', $startDate)
         ->groupBy(DB::raw('category'))
         ->get();
         
@@ -82,8 +88,25 @@ class ReportController extends Controller
         $nagad = Order::whereDate('created_at', $startDate)->where('payment_method','Nagad')->sum('payable_amount');
         $card = Order::whereDate('created_at', $startDate)->where('payment_method','card')->sum('payable_amount');
 
+        $endDate = $startDate;
+
+        $categories = Category::with(['orderSku' => function($query) use($startDate,$endDate) {
+            $query->select('item_name','item_price','category_id', DB::raw('SUM(quantity) as total_quantity'))
+                  ->whereDate('created_at','=', [$startDate])
+                  ->groupBy('category_id','item_name');
+        }])->withCount('orderSku')->get();
+
+        // $categories = Category::with(['orderSku' => function($query) use ($startDate, $endDate) {
+        //     $query->select('item_name','item_price','category_id', DB::raw('SUM(quantity) as total_quantity'))
+        //           ->whereDate('created_at', [$startDate])  // Filter by date
+        //           ->groupBy('category_id');
+        // }])->withCount(['orderSku' => function($query) use ($startDate, $endDate) {
+        //     $query->whereDate('created_at', [$startDate]); // Filter item count by date range
+        // }])->get();
+
+        // return $categories;
+        
         $data = [
-            'reports'=>$reports,
             't_table'=>$t_table,
             'q_table'=>$q_table,
             't_new'=>$t_new,
@@ -99,12 +122,20 @@ class ReportController extends Controller
             'nagad'=>$nagad,
             'card'=>$card,
             'orderCategory'=>$orderCategory,
+            'categories'=>$categories,
         ];
+
         return response()->json($data);
     }
 
     public function monthWise(){
-        return view('admin.report.monthwise');
+
+        $settings = SystemSettings::all();
+        $shopName = $settings[3]['settings_value']['store_name'];
+        $shopMobile = $settings[3]['settings_value']['store_mobile'];
+        $shopAddress = $settings[3]['settings_value']['store_address'];
+
+        return view('admin.report.monthwise', compact('shopName','shopMobile','shopAddress'));
     }
 
     public function getMonthReportData(Request $request)
@@ -112,8 +143,12 @@ class ReportController extends Controller
         $startDate = $request->start_date;
         $endDate = $request->end_date;
 
-        $reports = OrderSKu::whereDate('created_at', '>=', $startDate)
-        ->whereDate('created_at', '<=', $endDate)->get();
+        $categories = Category::with(['orderSku' => function($query) use($startDate,$endDate) {
+            $query->select('item_name','item_price','category_id', DB::raw('SUM(quantity) as total_quantity'))
+                  ->whereDate('created_at','>=', [$startDate])
+                  ->whereDate('created_at', '<=', [$endDate])
+                  ->groupBy('category_id','item_name');
+        }])->withCount('orderSku')->get();
 
         $orderCategory = DB::table('order_skus')->join('categories','categories.id','=','order_skus.category_id')
         ->select('categories.name',DB::raw('category_id as category'))
@@ -142,15 +177,19 @@ class ReportController extends Controller
         $all_total   = Order::whereDate('created_at', '>=', $startDate)
         ->whereDate('created_at', '<=', $endDate)->sum('payable_amount');
 
-        $cash = Order::whereDate('created_at', $startDate)->where('payment_method','Cash')->sum('payable_amount');
-        $bkash = Order::whereDate('created_at', $startDate)->where('payment_method','Bkash')->sum('payable_amount');
-        $rocket = Order::whereDate('created_at', $startDate)->where('payment_method','Rocket')->sum('payable_amount');
-        $nagad = Order::whereDate('created_at', $startDate)->where('payment_method','Nagad')->sum('payable_amount');
-        $card = Order::whereDate('created_at', $startDate)->where('payment_method','card')->sum('payable_amount');
+        $cash = Order::whereDate('created_at', '>=', $startDate)
+        ->whereDate('created_at', '<=', $endDate)->where('payment_method','Cash')->sum('payable_amount');
+        $bkash = Order::whereDate('created_at', '>=', $startDate)
+        ->whereDate('created_at', '<=', $endDate)->where('payment_method','Bkash')->sum('payable_amount');
+        $rocket = Order::whereDate('created_at', '>=', $startDate)
+        ->whereDate('created_at', '<=', $endDate)->where('payment_method','Rocket')->sum('payable_amount');
+        $nagad = Order::whereDate('created_at', '>=', $startDate)
+        ->whereDate('created_at', '<=', $endDate)->where('payment_method','Nagad')->sum('payable_amount');
+        $card = Order::whereDate('created_at', '>=', $startDate)
+        ->whereDate('created_at', '<=', $endDate)->where('payment_method','card')->sum('payable_amount');
 
         
         $data = [
-            'reports'=>$reports,
             't_table'=>$t_table,
             'q_table'=>$q_table,
             't_new'=>$t_new,
@@ -166,6 +205,7 @@ class ReportController extends Controller
             'rocket'=>$rocket,
             'nagad'=>$nagad,
             'card'=>$card,
+            'categories'=>$categories,
         ];
         return response()->json($data);
     }

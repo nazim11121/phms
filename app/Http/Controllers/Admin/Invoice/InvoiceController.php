@@ -9,13 +9,17 @@ use App\Models\Brand;
 use App\Models\Group;
 use App\Models\Stock;
 use App\Models\Suplier;
+use App\Models\Invoice;
+use App\Models\InvoiceSku;
 use App\Models\MedicineAdd;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\SystemSettings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use App\DataTables\MedicineDataTable;
+use App\DataTables\DueDataTable;
+use App\DataTables\InvoiceDataTable;
 
 class InvoiceController extends Controller
 {
@@ -40,11 +44,12 @@ class InvoiceController extends Controller
      * @param  mixed $dataTable
      * @return void
      */
-    public function index(MedicineDataTable $dataTable)
+    public function index(InvoiceDataTable $dataTable)
     {
-        set_page_meta(__t('medicine'));
-        $medicineList = MedicineAdd::get();
-        return $dataTable->render('admin.medicine.index', compact('medicineList'));
+        set_page_meta(__t('invoice'));
+
+        $invoiceList = Invoice::get();
+        return $dataTable->render('admin.invoice.index', compact('invoiceList'));
     }
 
     /*
@@ -74,7 +79,6 @@ class InvoiceController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        // For now, simply return the product data
         return response()->json([
             'success' => true,
             'product' => $request->all(),
@@ -87,51 +91,85 @@ class InvoiceController extends Controller
      * Request Save
      * */
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+        
         $request->validate([
-            'name'          => 'required',
-            'group_id'      => 'required',
-            'brand_id'      => 'required',
-            'type_id'       => 'required',
-            'suplier_id'    => 'nullable', 
-            'quantity'      => 'required', 
-            'buying_price'  => 'nullable', 
-            'selling_price' => 'required', 
-            'expired_date'  => 'nullable',
-            'status'  => 'nullable',
+
+            'total'           => 'required', 
+            'grand_total'     => 'required', 
+            'discount_percentage'    => 'nullable', 
+            'discount_amount'        => 'nullable', 
+            'delivery_charge' => 'nullable', 
+            'customer_name'   => 'nullable',
+            'customer_mobile' => 'nullable',
+            'payment_method'  => 'nullable',
+            'payment_status'  => 'nullable',
         ]);
 
-        $medicineAdd = new MedicineAdd();
-        $medicineAdd->name = $request->name;
-        $medicineAdd->group_id = $request->group_id;
-        $medicineAdd->brand_id = $request->brand_id;
-        $medicineAdd->type_id = $request->type_id;
-        $medicineAdd->suplier_id = $request->suplier_id;
-        $medicineAdd->available_stock = $request->quantity;
-        $medicineAdd->buying_price = $request->buying_price;
-        $medicineAdd->selling_price = $request->selling_price;
-        $medicineAdd->expired_date = $request->expired_date;
-        $medicineAdd->created_by = Auth::id();
-        $medicineAdd->save();
+        $invoice_no = date('ymd').rand('11','999');
 
-        $stock = new Stock();
-        $stock->medicine_id = $medicineAdd->id;
-        $stock->previous = 0;
-        $stock->new = $request->quantity;
-        $stock->available_stock = $request->quantity;
-        $stock->selling_price = $request->selling_price;
-        $stock->expired_date = $stock->expired_date;
-        $stock->created_by = Auth::id();
-        $stock->save();
-       
-        if (!empty($medicineAdd)) {
-            flash(__t('medicine_create_successful'))->success();
-        } else {
-            flash(__t('medicine_create_failed'))->error();
+        $invoice = new Invoice();
+        $invoice->invoice_no = $invoice_no;
+        $invoice->total = $request->total;
+        $invoice->grand_total = $request->grand_total;
+        $invoice->customer_name = $request->customer_name;
+        $invoice->customer_mobile = $request->customer_mobile;
+        $invoice->discount_percentage = $request->discount_percentage;
+        $invoice->discount_amount = $request->discount_amount;
+        $invoice->payable_amount = $request->payable_amount;
+        $invoice->payment_method = $request->payment_method;
+        if($request->grand_total == $request->payable_amount){
+            $invoice->payment_status = "Paid"; 
+            $invoice->due = 0; 
+        }elseif($request->grand_total > $request->payable_amount){
+            $invoice->payment_status = "Partial"; 
+            $due = $request->grand_total-$request->payable_amount;
+            $invoice->due = $due; 
+        }elseif($request->grand_total < $request->payable_amount){
+            $invoice->payment_status = "Paid"; 
+            $due = 0;
+            $invoice->due = $due; 
+        }else{
+            $invoice->payment_status = "Unpaid";
+            $invoice->due = $request->grand_total;  
+        }
+        $invoice->created_by = Auth::id();
+        $invoice->save();
+
+        foreach($request->cart as $key=>$val){
+            $sku = new InvoiceSku();
+            $sku->invoice_id = $invoice->id;
+            $sku->product_id = $val['id'];
+            $sku->price = $val['price'];
+            $sku->quantity = $val['quantity'];
+            $sku->subtotal = $val['subtotal'];
+            $sku->created_by = Auth::id();
+            $sku->save();
+
+            $stockUpdate = MedicineAdd::find($val['id']);
+            $stockUpdate->available_stock = $stockUpdate->available_stock - $val['quantity'];
+            $stockUpdate->save();
+
+            $stockId = Stock::where('medicine_id',$val['id'])->latest()->pluck('id')->first();
+            $stockUpdate2 = Stock::find($stockId);
+            $stockUpdate2->available_stock = $stockUpdate2->available_stock - $val['quantity'];
+            $stockUpdate2->save();
         }
 
-        return redirect()->route('admin.medicine.index');
+        $sku = $request->cart;
+        $settings = SystemSettings::all();
+        $shopName = $settings[3]['settings_value']['store_name'];
+        $shopMobile = $settings[3]['settings_value']['store_mobile'];
+        $shopAddress = $settings[3]['settings_value']['store_address'];
+       
+        if (!empty($sku)) {
+            flash(__t('invoice_create_successful'))->success();
+        } else {
+            flash(__t('invoice_create_failed'))->error();
+        }
+
+        return response()->json(['invoice'=>$invoice,'sku'=>$sku,'shopName'=>$shopName,'shopMobile'=>$shopMobile,'shopAddress'=>$shopAddress]);
     }
 
     /**
@@ -223,59 +261,75 @@ class InvoiceController extends Controller
      */
 
     public function destroy($id): RedirectResponse
-    {
-        $stocks = Stock::where('medicine_id',$id)->get();
-        foreach($stocks as $value){
-            $stock = Stock::find($value->id);
-            $stock->delete();
+    {           
+        $sku = InvoiceSku::where('invoice_id',$id)->get();
+        foreach($sku as $value){
+            $sku = InvoiceSku::find($value->id);
+
+            $stockUpdate = MedicineAdd::find($sku->product_id);
+            $stockUpdate->available_stock = $stockUpdate->available_stock+$sku->quantity;
+            $stockUpdate->save();
+
+            $stockId = Stock::where('medicine_id',$sku->product_id)->latest()->pluck('id')->first();
+            $stockUpdate2 = Stock::find($stockId);
+            $stockUpdate2->available_stock = $stockUpdate2->available_stock+$sku->quantity;
+            $stockUpdate2->save();
+
+            $sku->delete();
         }
 
-        MedicineAdd::find($id)->delete();
+        Invoice::find($id)->delete();
 
-        if ($stock) {
+        if ($sku) {
             
-            flash(__t('medicine_deleted_successfully'))->success();
+            flash(__t('invoice_deleted_successfully'))->success();
         } else {
-            flash(__t('medicine_delete_failed'))->error();
+            flash(__t('invoice_delete_failed'))->error();
         }
 
-        return redirect()->route('admin.medicine.index');
+        return redirect()->route('admin.invoice.index');
     }
 
-    public function stock($id)
+    public function due(DueDataTable $dataTable)
     {
-        set_page_meta(__t('edit') . ' ' . __t('stock'));
+        set_page_meta(__t('due_list'));
 
-        $medicine = MedicineAdd::with('stock')->find($id);
+        $dueList = Invoice::where('due','!=','0')->get();
 
-        return response()->json(['medicine'=>$medicine]);
+        return $dataTable->render('admin.invoice.dueList',compact('dueList'));
     }
 
-    public function stockUpdate(Request $request)
+    public function paymentAdd($id)
     { 
-        $medicine = MedicineAdd::find($request->id);
-        $medicine->available_stock = $request->available_stock+$request->new;
-        $medicine->save();
+        $data = Invoice::find($id);
 
-        $stockId = Stock::where('medicine_id',$request->id)->get()->first(); 
-        $stockUpdate = new Stock();
-        $stockUpdate->medicine_id = $request->id;
-        $stockUpdate->previous = $request->available_stock;
-        $stockUpdate->new = $request->new;
-        $stockUpdate->available_stock = $request->available_stock+$request->new;
-        $stockUpdate->expired_date = $request->expired_date;
-        $stockUpdate->buying_price = $request->buying_price;
-        $stockUpdate->selling_price = $request->selling_price;
-        $stockUpdate->save();
+        return response()->json($data);
+    }
 
-        if ($stockUpdate) {
-            
-            flash(__t('stock_updated_successfully'))->success();
-        } else {
-            flash(__t('stock_update_failed'))->error();
+    public function paymentStore(Request $request)
+    { 
+        $data = Invoice::find($request->order_id);
+        if($request->payable_amount == $data->due){
+            $data->payable_amount = $data->payable_amount + $request->payable_amount;
+            $data->payment_method = $request->payment_method;
+            $data->payment_status = 'Paid';
+            $data->due = 0;
+            $data->save();
+        }else{
+            $data->payable_amount = $data->payable_amount + $request->payable_amount;
+            $data->payment_method = $request->payment_method;
+            $data->payment_status = 'Partial';
+            $data->due = $data->grand_total - $data->payable_amount;
+            $data->save();
         }
 
-        return redirect()->route('admin.medicine.index');
+        if ($data) {
+            flash(('Payment Added Successfully'))->success();
+        } else {
+            flash(('Payment Add Failed'))->error();
+        }
+        
+        return redirect()->route('admin.invoice.due');
     }
 
 }

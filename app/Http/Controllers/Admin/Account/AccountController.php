@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Account;
 use Carbon\Carbon;
-use App\Models\Order;
-use App\Models\OrderSku;
+use App\Models\Invoice;
+use App\Models\InvoiceSku;
 use App\Models\Expense;
 use App\Models\Staff;
 use App\Models\StaffSalary;
@@ -53,23 +53,24 @@ class AccountController extends Controller
 
     public function credited(){
 
-        $orderDate = DB::table('orders')
+        $orderDate = DB::table('invoices')
         ->select(DB::raw('DATE(created_at) as date'))
         ->groupBy(DB::raw('DATE(created_at)'))
         ->orderBy('date', 'desc')
         ->get();
 
-        $orderData = DB::table('orders')
-        ->select('order_type','grand_total',DB::raw('DATE(created_at) as date2'))
+        $orderData = DB::table('invoices')
+        ->select('grand_total',DB::raw('DATE(created_at) as date2'))
+        ->where('payment_status','Paid')
         ->orderBy('date2', 'desc')
         ->get();
 
-        $tableTotal = Order::where('order_type','Table Order')->sum('grand_total');
-        $parcelTotal = Order::where('order_type','Parcel Order')->sum('grand_total');
-        $deliveryTotal = Order::where('order_type','Delivery Order')->sum('grand_total');
-        $newTotal = Order::where('order_type','New Order')->sum('grand_total');
+        $tableTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
+        $parcelTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
+        $deliveryTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
+        $newTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
 
-        $creditedTotal = Order::sum('grand_total');
+        $creditedTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
 
         return view('admin.account.credit',compact('orderDate','orderData','tableTotal','parcelTotal','deliveryTotal','newTotal','creditedTotal'));
     }
@@ -79,10 +80,10 @@ class AccountController extends Controller
         $startDate = $request->start_date;
         $endDate = $request->end_date;
 
-        $credited = Order::with('orderSku')->whereDate('created_at', '>=', $startDate)
+        $credited = Invoice::with('sku')->whereDate('created_at', '>=', $startDate)
         ->whereDate('created_at', '<=', $endDate)->get();
 
-        $creditedTotal = Order::whereDate('created_at', '>=', $startDate)
+        $creditedTotal = Invoice::whereDate('created_at', '>=', $startDate)
         ->whereDate('created_at', '<=', $endDate)->sum('grand_total');
 
         return response()->json([ 'credited'=>$credited,'creditedTotal'=>$creditedTotal]);
@@ -125,23 +126,24 @@ class AccountController extends Controller
 
     public function balance(Request $request){
 
-        $orderDate = DB::table('orders')
+        $orderDate = DB::table('invoices')
         ->select(DB::raw('DATE(created_at) as date'))
         ->groupBy(DB::raw('DATE(created_at)'))
         ->orderBy('date', 'desc')
         ->get();
 
-        $orderData = DB::table('orders')
-        ->select('order_type','grand_total',DB::raw('DATE(created_at) as date2'))
+        $orderData = DB::table('invoices')
+        ->select('grand_total',DB::raw('DATE(created_at) as date2'))
+        ->where('payment_status','Paid')
         ->orderBy('date2', 'desc')
         ->get();
 
-        $tableTotal = Order::where('order_type','Table Order')->sum('grand_total');
-        $parcelTotal = Order::where('order_type','Parcel Order')->sum('grand_total');
-        $deliveryTotal = Order::where('order_type','Delivery Order')->sum('grand_total');
-        $newTotal = Order::where('order_type','New Order')->sum('grand_total');
+        $tableTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
+        $parcelTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
+        $deliveryTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
+        $newTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
 
-        $creditedTotal = Order::sum('grand_total');
+        $creditedTotal = Invoice::where('payment_status','Paid')->sum('grand_total');
 
 
         $expenseDate = DB::table('expenses')
@@ -164,7 +166,7 @@ class AccountController extends Controller
         $startDate = $request->start_date;
         $endDate = $request->end_date;
         if($request->start_date && $request->end_date){
-            $orderDate = DB::table('orders')
+            $orderDate = DB::table('invoices')
             ->select(DB::raw('DATE(created_at) as date'))
             ->whereDate('created_at', '>=', $startDate)
             ->whereDate('created_at', '<=', $endDate)
@@ -172,24 +174,25 @@ class AccountController extends Controller
             ->orderBy('date', 'desc')
             ->get();
 
-            $orderData = DB::table('orders')
-            ->select('order_type','grand_total',DB::raw('DATE(created_at) as date2'))
+            $orderData = DB::table('invoices')
+            ->select('grand_total',DB::raw('DATE(created_at) as date2'))
             ->whereDate('created_at', '>=', $startDate)
             ->whereDate('created_at', '<=', $endDate)
+            ->where('payment_status','Paid')
             ->orderBy('date2', 'desc')
             ->get();
 
-            $tableTotal = Order::where('order_type','Table Order')->whereDate('created_at', '>=', $startDate)
-            ->whereDate('created_at', '<=', $endDate)->sum('grand_total');
-            $parcelTotal = Order::where('order_type','Parcel Order')->whereDate('created_at', '>=', $startDate)
-            ->whereDate('created_at', '<=', $endDate)->sum('grand_total');
-            $deliveryTotal = Order::where('order_type','Online Delivery')->whereDate('created_at', '>=', $startDate)
-            ->whereDate('created_at', '<=', $endDate)->sum('grand_total');
-            $newTotal = Order::where('order_type','New Order')->whereDate('created_at', '>=', $startDate)
-            ->whereDate('created_at', '<=', $endDate)->sum('grand_total');
+            $tableTotal = Invoice::whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)->where('payment_status','Paid')->sum('grand_total');
+            $parcelTotal = Invoice::whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)->where('payment_status','Paid')->sum('grand_total');
+            $deliveryTotal = Invoice::whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)->where('payment_status','Paid')->sum('grand_total');
+            $newTotal = Invoice::whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)->where('payment_status','Paid')->sum('grand_total');
 
-            $creditedTotal = Order::whereDate('created_at', '>=', $startDate)
-            ->whereDate('created_at', '<=', $endDate)->sum('grand_total');
+            $creditedTotal = Invoice::whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)->where('payment_status','Paid')->sum('grand_total');
 
 
             $expenseDate = DB::table('expenses')
@@ -223,7 +226,7 @@ class AccountController extends Controller
 
     public function printData($id){
 
-        $data = Order::with('user','orderSkuList','orderSkuList.service','orderSkuList.category')->find($id); 
+        $data = Invoice::with('user','sku','sku.medicine')->find($id); 
 
         return response()->json(['data' => $data]);
     }

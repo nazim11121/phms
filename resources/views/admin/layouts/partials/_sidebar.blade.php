@@ -73,7 +73,7 @@
                 @endcanany
                 @canany('Order-Management')
                 <li class="{{ request()->is('admin/medicine') ? 'mm-active' : '' }}">
-                    <a href="#" class=""><i class="mdi mdi-book"></i><span> {{
+                    <a href="#" class=""><i class="mdi mdi-medical-bag"></i><span> {{
                             __('Medicine') }}
                         
                             <span class="float-right menu-arrow">
@@ -108,7 +108,7 @@
                         @endcan
                         @can('User')
                         <li class="{{ request()->is('admin/suplier/*') ? 'mm-active' : '' }}"><a
-                                href="{{route('admin.suplier.index')}}">{{ __('Suplier') }}</a>
+                                href="{{route('admin.suplier.index')}}">{{ __('Supplier') }}</a>
                         </li>
                         @endcan
                     </ul>
@@ -117,7 +117,7 @@
 
                 @canany('Order-Management')
                 <li class="{{ request()->is('admin/order/due/list') ? 'mm-active' : '' }}">
-                    <a href="#" class=""><i class="mdi mdi-book"></i><span> {{
+                    <a href="#" class=""><i class="mdi mdi-account-card-details"></i><span> {{
                             __('Staff') }}
                         
                             <span class="float-right menu-arrow">
@@ -151,7 +151,7 @@
 
                 @can('Customer')
                 <li class="{{ request()->is('admin/customers') ? 'mm-active' : '' }}">
-                    <a href="{{ route('admin.customers.index') }}" class=""><i class="mdi mdi-book"></i><span> {{
+                    <a href="{{ route('admin.customers.index') }}" class=""><i class="mdi mdi-account"></i><span> {{
                             __('custom.customers') }}
                         </span>
                     </a>
@@ -160,7 +160,7 @@
 
                 @canany('Order-Management')
                 <li class="{{ request()->is('admin/order/due/list') ? 'mm-active' : '' }}">
-                    <a href="#" class=""><i class="mdi mdi-book"></i><span> {{
+                    <a href="#" class=""><i class="mdi mdi-calculator"></i><span> {{
                             __('Accounts') }}
                         
                             <span class="float-right menu-arrow">
@@ -194,7 +194,7 @@
 
                 @canany('Order-Management')
                 <li class="{{ request()->is('admin/order/due/list') ? 'mm-active' : '' }}">
-                    <a href="#" class=""><i class="mdi mdi-book"></i><span> {{
+                    <a href="#" class=""><i class="mdi mdi-chart-line"></i><span> {{
                             __('Reports') }}
                         
                             <span class="float-right menu-arrow">

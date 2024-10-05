@@ -3,7 +3,7 @@
 namespace App\DataTables;
 
 use PDF;
-use App\Models\Order;
+use App\Models\Invoice;
 use App\Models\Customer;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Column;
@@ -35,7 +35,7 @@ class CustomerDataTable extends DataTable
      * @param User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Order $model)
+    public function query(Invoice $model)
     {
         return $model->newQuery()->where('customer_name','!=','null')->orderBy('id','desc');
     }
@@ -48,7 +48,7 @@ class CustomerDataTable extends DataTable
     public function html()
     {
         $params             = $this->getBuilderParameters();
-        $params['order']    = [[1, 'asc']];
+        $params['invoice']    = [[1, 'asc']];
 
         return $this->builder()
             ->columns($this->getColumns())

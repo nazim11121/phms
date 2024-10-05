@@ -5,8 +5,8 @@
     <div class="row align-items-center">
         <div class="col-sm-6">
             <!-- <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="ic-javascriptVoid">{{ __t('suplier') }}</a></li>
-                <li class="breadcrumb-item active">{{ __('custom.suplier') }}</li>
+                <li class="breadcrumb-item"><a href="#" class="ic-javascriptVoid">{{ __t('supplier') }}</a></li>
+                <li class="breadcrumb-item active">{{ __('custom.supplier') }}</li>
             </ol> -->
         </div>
     </div>
@@ -16,7 +16,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title">{{ __t('add_suplier') }}</h4>
+                <h4 class="header-title">{{ __t('add_supplier') }}</h4>
 
                 <form class="form-validate" action="{{ route('admin.suplier.store') }}" method="POST"
                     enctype="multipart/form-data">
@@ -24,7 +24,7 @@
                     <div class="container">
                         <div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Suplier Name <span class="requiredStar"> *</span></label>
+                                <label class="col-sm-3 col-form-label">Supplier Name <span class="requiredStar"> *</span></label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="name" id="name" required>
                                 </div>

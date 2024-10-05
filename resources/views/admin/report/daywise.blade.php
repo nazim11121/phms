@@ -14,28 +14,30 @@
                     <h4 class="header-title">{{ __('Day Wise Reports') }}</h4><br>
                 </div>
                 <div class="row mt-4 ml-4 mb-4 no-print">
-                    <form class="form-inline" id="filter-form">
+                    <form class="d-flex mb-2" id="filter-form">
                         <label for="start_date">Date: </label>
                         <input type="text" class="form-control datepicker ml-3" autocomplete="off" id="from_date" name="start_date" required>          
                         <button type="submit" class="btn btn-info ml-3">Filter</button>
                     </form>
-                    <button id="printBtn" class="btn btn-success ml-4 float-right">Print Report</button>
+                    <div class="col-sm-6">
+                        <button id="printBtn" class="btn btn-success ml-4 float-right">Print Report</button>
+                    </div>
                 </div>
                 <div id="printSection">
                     <div class="text-center mt-4">
-                        <h4 style="text-align:center;">ধোঁয়া Restaurant</h4>
-                        <h5 style="text-align:center;">RC Street, Court Para</h5>
-                        <h5 style="text-align:center;">Kushtia(+8801873690534)</h5>
+                        <h4 style="text-align:center;">{{$shopName}}</h4>
+                        <h5 style="text-align:center;">{{$shopAddress}}</h5>
+                        <h5 style="text-align:center;">{{$shopMobile}}</h5>
                         <h5 style="text-align:center;" id="filterDate"></h5>
                     </div>
                     <div class="col-sm-12">
                         <div class="card text-white bg-primary mb-3" style="max-width: 22rem;margin:auto">
                             <div class="card-header">
                                 <div class="form-inline">
-                                    <h6 class="card-title">Table Order(<span id="q_table">0</span>)</h6>
+                                    <h6 class="card-title">Invoice(<span id="q_table">0</span>)</h6>
                                     <h6 class="card-title" style="margin-left: auto;">৳ <span id="t_table">00</span></h6>
                                 </div>
-                                <div class="form-inline">
+                                <!-- <div class="form-inline">
                                     <h6 class="card-title">New Order(<span id="q_new">0</span>)</h6>
                                     <h6 class="card-title" style="margin-left: auto;">৳ <span id="n_table">00</span></h6>
                                 </div>
@@ -46,7 +48,7 @@
                                 <div class="form-inline">
                                     <h6 class="card-title">Online Delivery(<span id="q_delivery">0</span>)</h6>
                                     <h6 class="card-title" style="margin-left: auto;">৳ <span id="t_delivery">00</span></h6>
-                                </div>
+                                </div> -->
                                 <hr style="border: 1px solid white">
                                 <div class="form-inline">
                                     <h6 class="card-title">Total</h6>
@@ -69,7 +71,7 @@
                                     <h6 class="card-title">Nagad</h6>
                                     <h6 class="card-title" style="margin-left: auto;">৳ <span id="nagad">00</span></h6>
                                 </div>
-                                <div class="form-inline card" style="display:none">
+                                <div class="form-inline cards" style="display:none">
                                     <h6 class="card-title">Card</h6>
                                     <h6 class="card-title" style="margin-left: auto;">৳ <span id="card">00</span></h6>
                                 </div>
@@ -96,7 +98,7 @@
                     </table> -->
                     <!-- <div>Total: <span id="total"></span></div> -->
                     <div class="endPrint"  style="font-size:12px;text-align:center">
-                        <p>Powered by DIGITAL INNOVATION</p>
+                        <p>Powered by N&N Co.</p>
                     </div>
                 </div>
             </div>
@@ -176,7 +178,7 @@
                         itemBody.empty(); // Clear the existing data
                         // Clear existing table data
                         // table.clear().draw();
-                        // console.log(data.t_table);
+                        console.log(data);
                         $('#t_table').text(data.t_table);
                         $('#q_table').text(data.q_table);
                         $('#t_new').text(data.t_new);
@@ -205,19 +207,20 @@
                             $('.nagad').css('display','flex');
                         }
                         if(data.card>0){
-                            $('.card').css('display','flex');
+                            $('.cards').css('display','flex');
                         }
-                        // Append new data to the table
-                        data.orderCategory.forEach(value1 => {
+
+                        data.categories.forEach(value1 => {
                             
-                            var itemBody = '<p style="margin-bottom: auto;color:red">'+value1.name+'</p>';
-                              
-                            data.reports.forEach(value => {
-                                if(value1.category == value.category_id){
-                                        
-                                    itemBody+='<tr><td>'+value.quantity+'x'+value.item_name+ '</td><td style="text-align:right"> ৳' +value.subtotal+'</td></tr></br>';
-                                }
+                            if(value1.order_sku!=''){
+                                var itemBody = '<p style="margin-bottom: auto;color:red">'+value1.name+'</p>';
+                            }  
+                            value1.order_sku.forEach(value => {
+                                
+                                itemBody+='<tr><td>'+value.total_quantity+'x'+value.item_name+ '</td> <td>' +value.item_price+'</td></tr></br>';
+                                    
                             });
+                            
                             $('#report-table').append(itemBody);
                                
                             // let totals = report.total;

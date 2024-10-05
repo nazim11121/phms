@@ -38,7 +38,7 @@ class SuplierController extends Controller
      */
     public function index(SuplierDataTable $dataTable)
     {
-        set_page_meta(__t('suplier'));
+        set_page_meta(__t('supplier'));
         $suplierList = Suplier::get();
         return $dataTable->render('admin.suplier.index', compact('suplierList'));
     }
@@ -50,7 +50,7 @@ class SuplierController extends Controller
 
     public function create()
     {
-        set_page_meta(__t('add') . ' ' . __t('suplier'));
+        set_page_meta(__t('add') . ' ' . __t('supplier'));
 
         $brands = Brand::where('status','Active')->get();
         return view('admin.suplier.create', compact('brands'));
@@ -79,9 +79,9 @@ class SuplierController extends Controller
         $suplier->save();
        
         if (!empty($suplier)) {
-            flash(__t('suplier_create_successful'))->success();
+            flash(__t('supplier_create_successful'))->success();
         } else {
-            flash(__t('suplier_create_failed'))->error();
+            flash(__t('supplier_create_failed'))->error();
         }
 
         return redirect()->route('admin.suplier.index');
@@ -106,7 +106,7 @@ class SuplierController extends Controller
 
     public function edit($id)
     {
-        set_page_meta(__t('edit') . ' ' . __t('suplier'));
+        set_page_meta(__t('edit') . ' ' . __t('supplier'));
         $suplier = Suplier::find($id);
         $brands = Brand::where('status','Active')->get();
         return response()->json(['suplier'=>$suplier,'brands'=>$brands]);
@@ -139,9 +139,9 @@ class SuplierController extends Controller
         $suplier->save();
         
         if (!empty($suplier)) {
-            flash(__t('suplier_update_successful'))->success();
+            flash(__t('supplier_update_successful'))->success();
         } else {
-            flash(__t('suplier_update_failed'))->error();
+            flash(__t('supplier_update_failed'))->error();
         }
 
         return redirect()->route('admin.suplier.index');
@@ -155,9 +155,9 @@ class SuplierController extends Controller
     {
         if (Suplier::find($id)->delete()) {
             
-            flash(__('custom.suplier_deleted_successfully'))->success();
+            flash(__('custom.supplier_deleted_successfully'))->success();
         } else {
-            flash(__('custom.suplier_delete_failed'))->error();
+            flash(__('custom.supplier_delete_failed'))->error();
         }
 
         return redirect()->route('admin.suplier.index');

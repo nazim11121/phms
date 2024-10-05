@@ -46,7 +46,7 @@
                         </div>    
                     </form>
                 </div>
-                <div id="printSection">
+                <div class="table-responsive" id="printSection">
                     <!-- <div class="text-center mt-4">
                         <h4 style="text-align:center;">Dhoya Restaurant</h4>
                         <h5 style="text-align:center;">RC Street, Court Para</h5>

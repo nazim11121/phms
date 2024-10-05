@@ -91,9 +91,6 @@ class MedicineController extends Controller
         $medicineAdd->type_id = $request->type_id;
         $medicineAdd->suplier_id = $request->suplier_id;
         $medicineAdd->available_stock = $request->quantity;
-        // $medicineAdd->buying_price = $request->buying_price;
-        // $medicineAdd->selling_price = $request->selling_price;
-        // $medicineAdd->expired_date = $request->expired_date;
         $medicineAdd->created_by = Auth::id();
         $medicineAdd->save();
 

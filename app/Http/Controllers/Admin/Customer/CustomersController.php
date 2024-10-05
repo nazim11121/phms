@@ -6,7 +6,7 @@ use App\DataTables\CustomerDataTable;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Order;
+use App\Models\Invoice;
 use App\Models\Customer;
 use App\Services\Role\RoleService;
 use App\Services\User\UserService;
@@ -54,7 +54,7 @@ class CustomersController extends Controller
     public function index(CustomerDataTable $dataTable)
     {
         set_page_meta(__('custom.customers'));
-        $customerList = Order::latest()->get();
+        $customerList = Invoice::latest()->get();
         
         return $dataTable->render('admin.customer.index', compact('customerList'));
     }

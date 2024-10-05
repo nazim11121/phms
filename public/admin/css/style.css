@@ -58,7 +58,7 @@ TABLES OF CSS
 ===================*/
 body {
   background-repeat: repeat;
-  background: var(--primary-color);
+  background: #1B1C31;
   font-family: "Roboto";
   font-size: 16px;
 }
@@ -744,7 +744,7 @@ dt {
 
 .metismenu {
   padding: 0;
-  background-color: var(--primary-color);#1B1C31;
+  background-color: #1B1C31;
   color: #F4F5FA;
 }
 .metismenu ul {
@@ -788,7 +788,7 @@ dt {
   z-index: 999;
 }
 .topbar .topbar-left {
-  background: var(--primary-color);
+  background: #1B1C31;
   float: left;
   text-align: center;
   height: 70px;
@@ -838,7 +838,7 @@ dt {
 .side-menu {
   width: 240px;
   z-index: 10;
-  background: var(--primary-color);
+  background: #1B1C31;
   bottom: 0;
   margin-top: 0;
   padding-bottom: 30px;
@@ -909,7 +909,7 @@ dt {
 }
 #sidebar-menu > ul > li > a:hover, #sidebar-menu > ul > li > a:active {
   /*color: var(--primary-color);*/
-  /* color: ; */
+  color: ;
   text-decoration: none;
 }
 
@@ -936,7 +936,7 @@ dt {
   transition: 0.3s;
 }
 #sidebar-menu li.mm-active > a {
-  background-color: #262832;
+  background-color: var(--primary-color);
   color: #fff;
   margin-right: 17px;
   border-top-right-radius: 40px;
@@ -1056,7 +1056,7 @@ dt {
   position: relative;
   width: 260px;
   color: var(--primary-color) !important;
-  background-color: #f9f9f9;
+  background-color: #b39bec;
 }
 .enlarged #wrapper .left.side-menu #sidebar-menu ul > li:hover > ul {
   display: block;
@@ -1147,7 +1147,7 @@ dt {
 .footer {
   bottom: 0;
   text-align: center !important;
-  padding: 19px 30px 20px;
+  padding: 12px 30px 13px;
   position: absolute;
   background-color: var(--primary-color);
   right: 0;
@@ -5414,7 +5414,7 @@ table.dataTable thead td {
 }
 .ic_main_form_inner .form_box img {
   max-width: 200px;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
 }
 .ic_main_form_inner .form_box h2 {
   color: #00033E;
@@ -5448,7 +5448,7 @@ table.dataTable thead td {
   font-size: 16px;
   color: #a1a1a1;
   border-radius: 30px;
-  border: 1px solid #f10c87;
+  border: 1px solid #1b1c31;
   background: white;
 }
 .ic_main_form_inner .form_box .login_form .form-group input.placeholder {
@@ -5597,7 +5597,7 @@ table.dataTable thead td {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #e9409a;
+  background: #5c60aa;
   border-radius: 25px;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);

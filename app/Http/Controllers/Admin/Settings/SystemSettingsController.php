@@ -56,7 +56,7 @@ class SystemSettingsController extends Controller
         $data = $request->except('_token');
         $key1 = env('APP_LICENCE');
         $key2 = env('APP_INSTALLED');
-      
+ 
         if($request['general']['store_name'] == $key1 && $key2==1){
 
             // Set site logo

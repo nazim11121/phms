@@ -26,7 +26,11 @@
                         </div>
                         <div class="col">
                             <div class="product-cards row">
+                                @php
+                                    $currentDate = date('Y-m-d',strtotime(Carbon\Carbon::now()));
+                                @endphp
                                 @foreach($medicineList as $product)
+                                    @if($product->stock->expired_date>$currentDate)
                                     <div class="col-sm-4" style="margin-right: -12px">
                                         <div class="card" style="width: fit-content;">
                                             <!-- <div class="card-body"> -->
@@ -35,18 +39,22 @@
                                                     data-name="{{ $product->name }}" 
                                                     data-price="{{ $product->stock->selling_price }}"
                                                     data-group="{{ $product->group->name }}">
-                                                    <h6>{{ $product->name }}({{ $product->available_stock }})</h6>
+                                                    <h6>{{ $product->name }}({{ $product->available_stock }}) </h6>
                                                     <p class="m-0">{{ $product->group->name }}</p>
                                                     <p class="m-0">Price: ৳{{ $product->stock->selling_price }}</p>
+                                                    
                                                     @if($product->available_stock>0)
-                                                        <button class="btn btn-primary btn-sm add-to-cart-btn text-center"><i class="fa fa-shopping-cart"></i></button>
+                                                        <button class="btn btn-primary btn-sm add-to-cart-btn text-center mt-1" style="float:left"><i class="fa fa-shopping-cart"></i></button>
+                                                        <a class="btn btn-sm btn-success mt-1" href="#" onclick="openStockUpdateModal(this)" data-toggle="modal" data-target="#myStockUpdateModal" data-value="{{$product->id}}" style="padding: 1px 7px;float:right"><i class="fa fa-plus"></i></a>
                                                     @else
-                                                    <button class="btn btn-danger brn-sm add-to-cart-btn text-center" style="font-size: smaller;" disabled>Stock Out</button>
+                                                        <button class="btn btn-danger btn-sm add-to-cart-btn text-center" style="font-size: smaller;float:left" disabled>Stock Out</button>
+                                                        <a class="btn btn-sm btn-success mt-1" href="#" style="padding: 1px 7px;float:right"><i class="fa fa-plus"></i></a>
                                                     @endif
                                                 </div>
                                             <!-- </div> -->
                                         </div>        
                                     </div>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -66,20 +74,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-bordered" id="cart-items">
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cart-items-list">
-                                    <!-- Cart items will be dynamically added here -->
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="cart-items">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cart-items-list">
+                                        <!-- Cart items will be dynamically added here -->
+                                    </tbody>
+                                </table>
+                            </div>
                             <h5>SubTotal: ৳<span id="total-amount">0</span></h5>
                             <input type="hidden" name="total" id="total">
                             
@@ -223,6 +233,82 @@
         </div>
     </div>
 <!-- Invoice Print End-->
+<!-- Edit Stock Modal Start -->
+    <div class="modal fade" id="myStockUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __t('stock_update') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form-validate" action="{{ route('admin.medicine.stock.update')}}" method="POST" enctype="multipart/form-data">
+                    @csrf   
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="hidden" name="from_access" value="invoice">
+                            <div class="form-group col-sm-6 mt-2">
+                                <label for="name">Medicine Name <span class="requiredStar"> *</span></label>
+                                <input type="text" class="form-control" name="name" id="name" required disabled>
+                                @error('name')
+                                <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="form-group col-sm-6 mt-2">
+                                <label for="name">Available Stock <span class="requiredStar"> *</span></label>
+                                <input type="text" class="form-control" name="available_stock" id="available_stock" required readonly>
+                                @error('available_stock')
+                                <p class="error">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row"> 
+                        <div class="form-group col-sm-6 mt-2">
+                            <label for="name">Add New Stock</label>
+                            <input type="number" class="form-control" name="new" id="new">
+                            @error('new')
+                            <p class="error">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group col-sm-6 mt-2">
+                            <label for="name">Expired Date<span class="requiredStar"> *</span></label>
+                            <input type="date" class="form-control" name="expired_date" id="expired_date" required>
+                            @error('expired_date')
+                            <p class="error">{{ $message }}</p>
+                            @enderror
+                        </div><br>
+                        </div> 
+                        <div class="row"> 
+                        <div class="form-group col-sm-6 mt-2">
+                            <label for="name">Buying Price</label>
+                            <input type="number" class="form-control" name="buying_price" id="buying_price">
+                            @error('buying_price')
+                            <p class="error">{{ $message }}</p>
+                            @enderror
+                        </div><br>
+                        <div class="form-group col-sm-6 mt-2">
+                            <label for="name">Selling Price<span class="requiredStar"> *</span></label>
+                            <input type="number" class="form-control" name="selling_price" id="selling_price" required>
+                            @error('selling_price')
+                            <p class="error">{{ $message }}</p>
+                            @enderror
+                        </div><br>
+                        </div> 
+                        <div class="row">  
+                            <input type="hidden" class="form-control" name="id" id="medicine_id" value="" /> 
+                            <p id="modalText3" hidden></p>
+                        </div>  
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>  
+            </div>
+        </div>
+    </div>
+<!-- Edit Stock Modal End -->
 @endsection
 
 @push('style')
@@ -241,6 +327,9 @@
         }
         .invoice-section {
             margin-left: 50px;
+        }
+        .modal-footer{
+            justify-content: center!important;
         }
     </style>
 @endpush
@@ -439,7 +528,7 @@
         // Initially show all product cards
         // $('.product-card').show();
 
-        let initialItems = 3;
+        let initialItems = 9;
         let totalItems = $(".product-card").length;
         $(".product-card").slice(initialItems).hide();
 
@@ -474,4 +563,41 @@
         });
     });
 </script>
+<!-- Stock Edit start -->
+<script>
+
+function openStockUpdateModal(button) {
+  
+  var valueToDisplay2 = button.getAttribute('data-value');
+  var modalText2 = document.getElementById("modalText3");
+
+  $.ajax({
+      url: '/admin/medicine/stock/' + valueToDisplay2,
+      method: 'GET',
+      // dataType: 'json',
+      success: function (response) {
+          console.log(response.medicine.stock);
+          $('#name').val(response.medicine.name);
+          $('#available_stock').val(response.medicine.available_stock);
+      },
+      error: function () {
+          alert('Failed to fetch record data.');
+      }
+  });
+
+  modalText2.innerHTML =  valueToDisplay2;
+
+  $('#medicine_id').val(valueToDisplay2); 
+
+  var modal = document.getElementById("myStockUpdateModal");
+  modal.style.display = "block";
+}
+
+function closeModal() {
+
+  var modal = document.getElementById("myStockUpdateModal");
+  modal.style.display = "none";
+}
+</script>
+<!-- Stock Edit end -->
 @endpush

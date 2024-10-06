@@ -172,22 +172,36 @@ class MedicineController extends Controller
         $medicineAdd->type_id = $request->type_id;
         $medicineAdd->suplier_id = $request->suplier_id;
         $medicineAdd->available_stock = $request->quantity;
-        $medicineAdd->buying_price = $request->buying_price;
-        $medicineAdd->selling_price = $request->selling_price;
-        $medicineAdd->expired_date = $request->expired_date;
         $medicineAdd->status = $status;
         $medicineAdd->updated_by = Auth::id();
         $medicineAdd->save();
+
+        $stockId = Stock::where('medicine_id',$medicineAdd->id)->latest()->pluck('id')->first();
         
-        $stockId = Stock::where('medicine_id',$medicineAdd->id)->get()->pluck('id')->first();
         $stock = Stock::findorfail($stockId);
-        $stock->previous = 0;
-        $stock->new = $request->quantity;
-        $stock->available_stock = $request->quantity;
-        $stock->selling_price = $request->selling_price;
-        $stock->expired_date = $stock->expired_date;
-        $stock->updated_by = Auth::id();
-        $stock->save();
+        if($request->quantity>$stock->available_stock){
+            $stock->new = $stock->new+($request->quantity-$stock->available_stock);
+            $stock->available_stock = $request->quantity;
+            $stock->buying_price = $request->buying_price;
+            $stock->selling_price = $request->selling_price;
+            $stock->expired_date = $stock->expired_date;
+            $stock->updated_by = Auth::id();
+            $stock->save();
+        }elseif($request->quantity<$stock->available_stock){
+            $stock->new = $stock->new-($stock->available_stock-$request->quantity);
+            $stock->available_stock = $request->quantity;
+            $stock->buying_price = $request->buying_price;
+            $stock->selling_price = $request->selling_price;
+            $stock->expired_date = $stock->expired_date;
+            $stock->updated_by = Auth::id();
+            $stock->save();
+        }else{
+            $stock->buying_price = $request->buying_price;
+            $stock->selling_price = $request->selling_price;
+            $stock->expired_date = $stock->expired_date;
+            $stock->updated_by = Auth::id();
+            $stock->save();
+        }
         
         if (!empty($stock)) {
             flash(__t('medicine_update_successful'))->success();
@@ -232,7 +246,7 @@ class MedicineController extends Controller
     }
 
     public function stockUpdate(Request $request)
-    { 
+    {    
         $medicine = MedicineAdd::find($request->id);
         $medicine->available_stock = $request->available_stock+$request->new;
         $medicine->save();
@@ -255,7 +269,11 @@ class MedicineController extends Controller
             flash(__t('stock_update_failed'))->error();
         }
 
-        return redirect()->route('admin.medicine.index');
+        if($request->from_access=='invoice'){
+            return redirect()->route('admin.invoice.create');
+        }else{
+            return redirect()->route('admin.medicine.index');
+        }
     }
 
 }

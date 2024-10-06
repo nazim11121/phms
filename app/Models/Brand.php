@@ -12,4 +12,9 @@ class Brand extends Model
 
     public const STATUS_ACTIVE = 'Active';
     public const STATUS_INACTIVE = 'Inactive';
+
+    public function medicine()
+    {
+        return $this->hasMany(MedicineAdd::class);
+    }
 }

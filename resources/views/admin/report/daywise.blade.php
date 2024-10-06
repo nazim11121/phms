@@ -79,7 +79,7 @@
                             </div>
                             
                             <div class="card-body" style="margin-top: -40px;">
-                                <h5 class="card-title">Item List</h5>
+                                <h5 class="card-title">Product List</h5>
                                 <p class="card-text" id="report-table"></p>
                             </div>
                         </div>
@@ -175,18 +175,10 @@
                     },
                     success: function(data) {
                         let itemBody = $('#report-table');
-                        itemBody.empty(); // Clear the existing data
-                        // Clear existing table data
-                        // table.clear().draw();
-                        console.log(data);
+                        itemBody.empty(); 
+                    
                         $('#t_table').text(data.t_table);
                         $('#q_table').text(data.q_table);
-                        $('#t_new').text(data.t_new);
-                        $('#q_new').text(data.q_new);
-                        $('#t_parcel').text(data.t_parcel);
-                        $('#q_parcel').text(data.q_parcel);
-                        $('#t_delivery').text(data.t_delivery);
-                        $('#q_delivery').text(data.q_delivery);
                         $('#all_total').text(data.all_total);
                         $('#cash').text(data.cash);
                         $('#bkash').text(data.bkash);
@@ -210,15 +202,16 @@
                             $('.cards').css('display','flex');
                         }
 
-                        data.categories.forEach(value1 => {
+                        data.brands.forEach(value1 => {
                             
-                            if(value1.order_sku!=''){
+                            if(value1.medicine!=''){
                                 var itemBody = '<p style="margin-bottom: auto;color:red">'+value1.name+'</p>';
                             }  
-                            value1.order_sku.forEach(value => {
+                            value1.medicine.forEach(value => {
                                 
-                                itemBody+='<tr><td>'+value.total_quantity+'x'+value.item_name+ '</td> <td>' +value.item_price+'</td></tr></br>';
-                                    
+                                if(value.sku_sum_quantity!=null){
+                                    itemBody+='<tr><td>'+value.sku_sum_quantity+'x'+value.name+ '</td></tr></br>';
+                                }   
                             });
                             
                             $('#report-table').append(itemBody);

@@ -61,6 +61,7 @@ Route::namespace('Admin')->prefix('admin')->as('admin.')->middleware(['auth','is
     Route::get('account/balance', 'Account\AccountController@balance')->name('account.balance');
     // report
     Route::resource('report', Item\ItemController::class);
+    Route::get('reports/stock', 'Report\ReportController@stockReport')->name('reports.stock');
     Route::get('reports/daywise', 'Report\ReportController@dayWise')->name('reports.daywise');
     Route::post('/reports/data', 'Report\ReportController@getReportData')->name('reports.data');
     Route::get('reports/monthwise', 'Report\ReportController@monthWise')->name('reports.monthwise');

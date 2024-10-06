@@ -112,7 +112,7 @@ class MedicineDataTable extends DataTable
             Column::make('group.name', 'group.name')->title(__('Group')),
             Column::make('brand.name', 'brand.name')->title(__('Brand')),
             Column::make('type.name', 'type.name')->title(__('Type')),
-            Column::make('suplier.name', 'suplier.name')->title(__('Suplier')),
+            Column::make('suplier.name', 'suplier.name')->title(__('Supplier')),
             Column::make('available_stock', 'available_stock')->title(__('Stock(Pc)')),
             Column::make('buying_price', 'buying_price')->title(__('Buying P')),
             Column::make('selling_price', 'selling_price')->title(__('Selling P')),

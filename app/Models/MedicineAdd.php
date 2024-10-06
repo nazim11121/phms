@@ -42,4 +42,9 @@ class MedicineAdd extends Model
     {
         return $this->belongsTo(Suplier::class, 'suplier_id', 'id');
     }
+
+    public function sku()
+    {
+        return $this->hasMany(InvoiceSku::class,'product_id');
+    }
 }

@@ -438,3 +438,10 @@ div.dataTables_wrapper div.dataTables_filter input{
 #sidebar-menu li.mm-active > a{
     text-decoration: none;
 }
+
+@media (max-width: 768px) {
+    .nav-btn a {
+        padding: 2px 4px;
+        font-size: 8px;
+    }
+}

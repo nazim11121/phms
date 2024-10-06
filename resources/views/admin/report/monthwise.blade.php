@@ -20,10 +20,10 @@
                         <label for="start_date" class="ml-4">To Date: </label>
                         <input type="text" class="form-control datepicker ml-3" autocomplete="off" id="to_date" name="end_date" required>          
                         
-                        <button type="submit" class="btn btn-info ml-3">Filter</button>
+                        <button type="submit" class="btn btn-info ml-3" style="height:fit-content">Filter</button>
                     </form>
-                    <div class="col-sm-6">
-                        <button id="printBtn" class="btn btn-success ml-4">Print Report</button>
+                    <div class="col-sm-5">
+                        <button id="printBtn" class="btn btn-success ml-4 float-right">Print Report</button>
                     </div>
                 </div>
                 <div id="printSection">
@@ -81,7 +81,7 @@
                                 <hr style="border: 1px solid white">
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Item List</h5>
+                                <h5 class="card-title">Product List</h5>
                                 <p class="card-text" id="report-table1"></p>
                                 <p class="card-text" id="report-table"></p>
                             </div>
@@ -181,18 +181,10 @@
                     },
                     success: function(data) {
                         let itemBody = $('#report-table');
-                        itemBody.empty(); // Clear the existing data
-                        // Clear existing table data
-                        // table.clear().draw();
+                        itemBody.empty(); 
                         // Append new data to the table
                         $('#t_table').text(data.t_table);
                         $('#q_table').text(data.q_table);
-                        $('#t_new').text(data.t_new);
-                        $('#q_new').text(data.q_new);
-                        $('#t_parcel').text(data.t_parcel);
-                        $('#q_parcel').text(data.q_parcel);
-                        $('#t_delivery').text(data.t_delivery);
-                        $('#q_delivery').text(data.q_delivery);
                         $('#all_total').text(data.all_total);
 
                         $('#cash').text(data.cash);
@@ -217,15 +209,15 @@
                             $('.cards').css('display','flex');
                         }
                         // Append new data to the table
-                        data.categories.forEach(value1 => {
+                        data.brands.forEach(value1 => {
                             
-                            if(value1.order_sku!=''){
+                            if(value1.medicine!=''){
                                 var itemBody = '<p style="margin-bottom: auto;color:red">'+value1.name+'</p>';
                             }  
-                            value1.order_sku.forEach(value => {
-                                
-                                itemBody+='<tr><td>'+value.total_quantity+'x'+value.item_name+ '</td> <td>' +value.item_price+'</td></tr></br>';
-                                    
+                            value1.medicine.forEach(value => {
+                                if(value.sku_sum_quantity!=null){
+                                    itemBody+='<tr><td>'+value.sku_sum_quantity+'x'+value.name+ '</td></tr></br>';
+                                }    
                             });
 
                             $('#report-table').append(itemBody);

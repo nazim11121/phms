@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 05, 2024 at 10:58 AM
+-- Generation Time: Oct 06, 2024 at 10:50 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.18
 
@@ -182,12 +182,7 @@ CREATE TABLE IF NOT EXISTS `ic_expenses` (
 --
 
 INSERT INTO `ic_expenses` (`id`, `name`, `amount`, `comments`, `payment_method`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(3, 'Masum CEO-1', '500', 'Others', NULL, 1, NULL, '2024-09-13 16:00:49', '2024-09-13 16:00:49'),
-(4, '1', '15000', 'Staff Salary', NULL, 1, NULL, '2024-09-13 16:08:34', '2024-09-13 16:08:34'),
-(5, '240947', '2300', 'Kitchen', NULL, 1, NULL, '2024-09-13 16:40:12', '2024-09-13 16:40:12'),
-(6, '240973', '4150', 'Kitchen', NULL, 1, NULL, '2024-09-13 16:40:45', '2024-09-13 16:40:45'),
-(7, '5', '15000', 'Staff Salary', NULL, 1, NULL, '2024-09-13 16:41:13', '2024-09-13 16:41:13'),
-(8, 'Mizan', '200', 'Jatayat Babod', NULL, 1, NULL, '2024-09-17 15:31:06', '2024-09-17 15:31:06');
+(8, 'Mizan', '30', 'Jatayat Babod', NULL, 1, NULL, '2024-09-17 15:31:06', '2024-09-17 15:31:06');
 
 -- --------------------------------------------------------
 
@@ -326,9 +321,9 @@ CREATE TABLE IF NOT EXISTS `ic_medicine_adds` (
 --
 
 INSERT INTO `ic_medicine_adds` (`id`, `name`, `group_id`, `brand_id`, `type_id`, `available_stock`, `suplier_id`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(3, 'Napa Extend', '1', '1', '1', '505', '1', 'Active', 1, 1, '2024-09-28 04:56:01', '2024-10-05 08:50:08'),
-(5, 'Rapid', '1', '3', '1', '2', '1', 'Active', 1, NULL, '2024-10-01 16:34:01', '2024-10-05 08:09:25'),
-(6, 'Plain Napa', '1', '1', '1', '10', '1', 'Active', 1, NULL, '2024-10-01 17:11:17', '2024-10-05 08:09:41'),
+(3, 'Napa Extend', '1', '1', '1', '501', '1', 'Active', 1, 1, '2024-09-28 04:56:01', '2024-10-06 06:20:46'),
+(5, 'Rapid', '1', '3', '1', '6', '1', 'Active', 1, NULL, '2024-10-01 16:34:01', '2024-10-06 10:49:30'),
+(6, 'Plain Napa', '1', '1', '1', '12', '1', 'Active', 1, NULL, '2024-10-01 17:11:17', '2024-10-06 10:41:02'),
 (7, 'Aci clofenac', '1', '3', '1', '2', '1', 'Active', 1, NULL, '2024-10-01 17:12:02', '2024-10-05 07:28:24');
 
 -- --------------------------------------------------------
@@ -1064,13 +1059,6 @@ CREATE TABLE IF NOT EXISTS `ic_staff_salaries` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `ic_staff_salaries`
---
-
-INSERT INTO `ic_staff_salaries` (`id`, `staff_id`, `salary`, `month`, `payable`, `payment_method`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(5, '1', '15000', 'August', '15000', 'Cash', 1, NULL, '2024-09-13 16:41:13', '2024-09-13 16:41:13');
-
 -- --------------------------------------------------------
 
 --
@@ -1092,7 +1080,7 @@ CREATE TABLE IF NOT EXISTS `ic_stocks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_stocks`
@@ -1100,11 +1088,14 @@ CREATE TABLE IF NOT EXISTS `ic_stocks` (
 
 INSERT INTO `ic_stocks` (`id`, `medicine_id`, `previous`, `new`, `available_stock`, `buying_price`, `selling_price`, `expired_date`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, '3', '0', '500', '500', '3', '4', '2024-09-27', 1, 1, '2024-09-28 04:56:01', '2024-10-03 16:21:00'),
-(6, '3', '500', '10', '506', '11', '12', '2024-09-29', NULL, NULL, '2024-09-28 16:25:00', '2024-10-05 08:50:08'),
-(7, '5', '0', '2', '2', '10', '14', '2024-10-02', 1, NULL, '2024-10-01 16:34:01', '2024-10-05 08:09:25'),
+(6, '3', '500', '511', '501', '11', '12', '2024-10-29', NULL, 1, '2024-09-28 16:25:00', '2024-10-06 06:20:46'),
+(7, '5', '0', '2', '2', '10', '14', '2024-10-12', 1, NULL, '2024-10-01 16:34:01', '2024-10-05 08:09:25'),
 (8, '6', '0', '2', '0', '2', '4', '2024-09-30', 1, NULL, '2024-10-01 17:11:17', '2024-10-05 06:22:52'),
-(9, '7', '0', '3', '2', '4', '6', '2024-10-02', 1, NULL, '2024-10-01 17:12:02', '2024-10-05 07:28:24'),
-(10, '6', '0', '10', '10', '10', '12', '2024-10-06', NULL, NULL, '2024-10-05 06:32:29', '2024-10-05 08:09:41');
+(9, '7', '0', '3', '2', '4', '6', '2024-10-30', 1, NULL, '2024-10-01 17:12:02', '2024-10-05 07:28:24'),
+(10, '6', '0', '10', '10', '10', '12', '2024-10-07', NULL, NULL, '2024-10-05 06:32:29', '2024-10-05 08:09:41'),
+(11, '6', '10', '2', '12', '2', '4', '2024-10-22', NULL, NULL, '2024-10-06 10:41:02', '2024-10-06 10:41:02'),
+(12, '5', '2', '2', '4', '14', '15', '2024-10-07', NULL, NULL, '2024-10-06 10:48:50', '2024-10-06 10:48:50'),
+(13, '5', '4', '2', '6', '12', '14', '2024-10-08', NULL, NULL, '2024-10-06 10:49:30', '2024-10-06 10:49:30');
 
 -- --------------------------------------------------------
 

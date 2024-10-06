@@ -20,6 +20,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\DataTables\DueDataTable;
 use App\DataTables\InvoiceDataTable;
+use Carbon\Carbon;
 
 class InvoiceController extends Controller
 {
@@ -65,7 +66,8 @@ class InvoiceController extends Controller
         $brands = Brand::where('status','Active')->get();
         $types = Type::where('status','Active')->get();
         $supliers = Suplier::where('status','Active')->get();
-        $medicineList = MedicineAdd::with(['stock','group','brand','type','suplier'])->where('status','Active')->get();
+
+        $medicineList = MedicineAdd::with(['stock','stocks','group','brand','type','suplier'])->where('status','Active')->get();
 
         return view('admin.invoice.create', compact('medicineList','groups','brands','types','supliers'));
     }

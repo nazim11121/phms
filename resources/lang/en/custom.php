@@ -704,6 +704,16 @@ return [
     'invoice_list' => 'Invoice List',
     'add_invoice'  => 'Add Invoice',
     'due_list'     => 'Due List',
+
+    'stock_list'        => 'Stock List',
+    'previous'          => 'Previous',
+    'new'               => 'New',
+    'available_stock'   => 'Available Stock',
+    'buying_price'      => 'Buying Price',
+    'selling_price'     => 'Selling Price',
+    'entry_date'        => 'Entry Date',
+    'expired_date'      => 'Expired Date',
+    
     
     'expense_create_successful'     => 'Expense Created Successfully',
     'expense_create_failed'         => 'Expense Create Failed',

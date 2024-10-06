@@ -211,6 +211,11 @@
                     <ul class="submenu">
                         @can('User')
                         <li class="{{ request()->is('admin/reports/*') ? 'mm-active' : '' }}"><a
+                                href="{{route('admin.reports.stock')}}">{{ __('Stock Report') }}</a>
+                        </li>
+                        @endcan
+                        @can('User')
+                        <li class="{{ request()->is('admin/reports/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.reports.daywise')}}">{{ __('Day Wise') }}</a>
                         </li>
                         @endcan

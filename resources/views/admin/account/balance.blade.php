@@ -82,7 +82,6 @@
                             <thead>
                                 <tr>
                                     <th>Date</th> 
-                                    <th style="text-align:center">Kitchen</th>
                                     <th style="text-align:center">Staff Salary</th>
                                     <th style="text-align:center">Others</th>
                                 </tr>
@@ -91,16 +90,6 @@
                                 @foreach($expenseDate as $value)
                                     <tr>
                                         <td>{{ date('d-m-Y',strtotime($value->date)) }}</td>
-                                        <td style="text-align:center">
-                                            @php $sum=0; @endphp
-                                            @foreach($expenseData as $data)
-                                                
-                                                @if($value->date==$data->date2 && $data->comments=="Kitchen")
-                                                    @php $sum = $sum + $data->amount; @endphp
-                                                @endif
-                                            @endforeach
-                                            {{$sum}} 
-                                        </td>
                                         <td style="text-align:center">
                                             @php $sum=0; @endphp
                                             @foreach($expenseData as $data)
@@ -125,7 +114,6 @@
                                 @endforeach
                                     <tr>
                                         <td><h6>Total</h6></td>
-                                        <td style="text-align:center"><span>৳ </span>{{$kitchenExpenseTotal}}</td>
                                         <td style="text-align:center"><span>৳ </span>{{$staffExpenseTotal}}</td>
                                         <td style="text-align:center"><span>৳ </span>{{$otherExpenseTotal}}</td>
                                     </tr>

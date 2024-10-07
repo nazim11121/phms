@@ -47,8 +47,8 @@
                                                         <button class="btn btn-primary btn-sm add-to-cart-btn text-center mt-1" style="float:left"><i class="fa fa-shopping-cart"></i></button>
                                                         <a class="btn btn-sm btn-success mt-1" href="#" onclick="openStockUpdateModal(this)" data-toggle="modal" data-target="#myStockUpdateModal" data-value="{{$product->id}}" style="padding: 1px 7px;float:right"><i class="fa fa-plus"></i></a>
                                                     @else
-                                                        <button class="btn btn-danger btn-sm add-to-cart-btn text-center" style="font-size: smaller;float:left" disabled>Stock Out</button>
-                                                        <a class="btn btn-sm btn-success mt-1" href="#" style="padding: 1px 7px;float:right"><i class="fa fa-plus"></i></a>
+                                                        <button class="btn btn-danger btn-sm add-to-cart-btn text-center" style="font-size: smaller;float:left" disabled>StockOut</button>
+                                                        <a class="btn btn-sm btn-success mt-1" href="#" onclick="openStockUpdateModal(this)" data-toggle="modal" data-target="#myStockUpdateModal" data-value="{{$product->id}}" style="padding: 1px 7px;float:right"><i class="fa fa-plus"></i></a>
                                                     @endif
                                                 </div>
                                             <!-- </div> -->
@@ -538,8 +538,9 @@
 
             $('.product-card').each(function() {
                 var productName = $(this).data('name').toLowerCase();
-
-                if (productName.includes(searchValue)) {
+                var genericName = $(this).data('group').toLowerCase();
+                
+                if (productName.includes(searchValue)||genericName.includes(searchValue)) {
                     $(this).show();  
                 } else {
                     $(this).hide();  
@@ -566,38 +567,38 @@
 <!-- Stock Edit start -->
 <script>
 
-function openStockUpdateModal(button) {
-  
-  var valueToDisplay2 = button.getAttribute('data-value');
-  var modalText2 = document.getElementById("modalText3");
+    function openStockUpdateModal(button) {
+    
+    var valueToDisplay2 = button.getAttribute('data-value');
+    var modalText2 = document.getElementById("modalText3");
 
-  $.ajax({
-      url: '/admin/medicine/stock/' + valueToDisplay2,
-      method: 'GET',
-      // dataType: 'json',
-      success: function (response) {
-          console.log(response.medicine.stock);
-          $('#name').val(response.medicine.name);
-          $('#available_stock').val(response.medicine.available_stock);
-      },
-      error: function () {
-          alert('Failed to fetch record data.');
-      }
-  });
+    $.ajax({
+        url: '/admin/medicine/stock/' + valueToDisplay2,
+        method: 'GET',
+        // dataType: 'json',
+        success: function (response) {
+            console.log(response.medicine.stock);
+            $('#name').val(response.medicine.name);
+            $('#available_stock').val(response.medicine.available_stock);
+        },
+        error: function () {
+            alert('Failed to fetch record data.');
+        }
+    });
 
-  modalText2.innerHTML =  valueToDisplay2;
+    modalText2.innerHTML =  valueToDisplay2;
 
-  $('#medicine_id').val(valueToDisplay2); 
+    $('#medicine_id').val(valueToDisplay2); 
 
-  var modal = document.getElementById("myStockUpdateModal");
-  modal.style.display = "block";
-}
+    var modal = document.getElementById("myStockUpdateModal");
+    modal.style.display = "block";
+    }
 
-function closeModal() {
+    function closeModal() {
 
-  var modal = document.getElementById("myStockUpdateModal");
-  modal.style.display = "none";
-}
+    var modal = document.getElementById("myStockUpdateModal");
+    modal.style.display = "none";
+    }
 </script>
 <!-- Stock Edit end -->
 @endpush

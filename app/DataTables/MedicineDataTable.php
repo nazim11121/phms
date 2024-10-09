@@ -55,14 +55,14 @@ class MedicineDataTable extends DataTable
                 return $item->type->name ?? '';
             })->editColumn('suplier.name', function ($item) {
                 return $item->suplier->name ?? '';
-            })->editColumn('buying_price', function ($item) {
+            })->editColumn('stock.buying_price', function ($item) {
                 return $item->stock->buying_price ?? '';
-            })->editColumn('selling_price', function ($item) {
+            })->editColumn('stock.selling_price', function ($item) {
                 return $item->stock->selling_price ?? '';
-            })->editColumn('entry.date', function ($item) {
+            })->editColumn('stock.created_at', function ($item) {
                 $date = date('d-m-Y', strtotime($item->stock->created_at));
                 return $date ?? '';
-            })->editColumn('expired.date', function ($item) {
+            })->editColumn('stock.expired_date', function ($item) {
                 $date = date('d-m-Y', strtotime($item->stock->expired_date));
                 return $date ?? '';
             })->editColumn('status', function ($item) {
@@ -79,7 +79,7 @@ class MedicineDataTable extends DataTable
      */
     public function query(MedicineAdd $model)
     {
-        return $model->newQuery()->orderBy('id','desc');
+        return $model->newQuery()->with(['stock','group','brand','type','suplier'])->orderBy('id','desc');
     }
 
     /**
@@ -114,10 +114,10 @@ class MedicineDataTable extends DataTable
             Column::make('type.name', 'type.name')->title(__('Type')),
             Column::make('suplier.name', 'suplier.name')->title(__('Supplier')),
             Column::make('available_stock', 'available_stock')->title(__('Stock(Pc)')),
-            Column::make('buying_price', 'buying_price')->title(__('Buying P')),
-            Column::make('selling_price', 'selling_price')->title(__('Selling P')),
-            Column::make('entry.date', 'entry.date')->title(__('Entry Date')),
-            Column::make('expired.date', 'expired.date')->title(__('Expired Date')),
+            Column::make('stock.buying_price', 'stock.buying_price')->title(__('Buying P')),
+            Column::make('stock.selling_price', 'stock.selling_price')->title(__('Selling P')),
+            Column::make('stock.created_at', 'stock.created_at')->title(__('Entry Date')),
+            Column::make('stock.expired_date', 'stock.expired_date')->title(__('Expired Date')),
             Column::make('status', 'status')->title(__('custom.status')),
         ];
     }

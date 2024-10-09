@@ -52,7 +52,9 @@ Route::namespace('Admin')->prefix('admin')->as('admin.')->middleware(['auth','is
     Route::get('invoice/due/list', 'Invoice\InvoiceController@due')->name('invoice.due');
     Route::get('invoice/due/payment/{id}', 'Invoice\InvoiceController@paymentAdd')->name('invoice.payment');
     Route::post('invoice/due/payment', 'Invoice\InvoiceController@paymentStore')->name('invoice.payment.store');
-    
+    // Purchase
+    Route::resource('purchase', Purchase\PurchaseController::class);
+    Route::get('purchase/print/{id}','Purchase\PurchaseController@print')->name('purchase.print');
     // account
     Route::get('account/credited', 'Account\AccountController@credited')->name('account.credited');
     Route::post('account/credited-data', 'Account\AccountController@creditedData')->name('account.creditedData');

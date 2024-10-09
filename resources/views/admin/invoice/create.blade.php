@@ -331,6 +331,27 @@
         .modal-footer{
             justify-content: center!important;
         }
+        @media print {
+            @page {
+                size: 58mm auto; /* Adjust width to match printer's paper width */
+                margin: 0;
+            }
+            body {
+                font-size: 12px; /* Set the font size */
+                margin: 0; /* No margins */
+                padding: 0;
+                width: 58mm;
+                height: auto;
+            }
+        } 
+        .printDiv1 {
+            width: 58mm; /* Mini printer paper width, change to 58mm if needed */
+            margin: 20px auto; /* Center the receipt preview */
+            padding: 10px;
+            border: 1px solid #ccc; /* Optional border for screen preview */
+            font-size: 12px;
+            background-color: #f9f9f9; /* Light background */
+        }  
     </style>
 @endpush
 

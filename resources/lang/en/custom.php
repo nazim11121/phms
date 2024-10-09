@@ -699,6 +699,13 @@ return [
     'invoice_deleted_successfully'  => 'Invoice Deleted Successfully',
     'invoice_deleted_failed'        => 'Invoice Deleted Failed',
 
+    'purchase_list_create_successful'     => 'Purchase List Created Successfully',
+    'purchase_list_create_failed'         => 'Purchase List Create Failed',
+    'purchase_list_update_successful'     => 'Purchase List Updated Successfully',
+    'purchase_list_update_failed'         => 'Purchase List Updated Failed',
+    'purchase_list_deleted_successfully'  => 'Purchase List Deleted Successfully',
+    'purchase_list_deleted_failed'        => 'Purchase List Deleted Failed',
+
     'invoice'      => 'Invoice',
     'invoice_no'   => 'Invoice No',
     'invoice_list' => 'Invoice List',
@@ -713,7 +720,11 @@ return [
     'selling_price'     => 'Selling Price',
     'entry_date'        => 'Entry Date',
     'expired_date'      => 'Expired Date',
-    
+
+    'purchase'          => 'Purchase',
+    'purchase_list'     => 'Purchase List',
+    'add_purchase'      => 'Add Purchase List',
+    'edit_purchase'     => 'Edit Purchase List',
     
     'expense_create_successful'     => 'Expense Created Successfully',
     'expense_create_failed'         => 'Expense Create Failed',

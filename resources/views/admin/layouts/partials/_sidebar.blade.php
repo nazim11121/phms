@@ -158,6 +158,15 @@
                 </li>
                 @endcanany
 
+                @can('Customer')
+                <li class="{{ request()->is('admin/customers') ? 'mm-active' : '' }}">
+                    <a href="{{ route('admin.purchase.index') }}" class=""><i class="mdi mdi-store"></i><span> {{
+                            __('Purchase List') }}
+                        </span>
+                    </a>
+                </li>
+                @endcanany
+
                 @canany('Order-Management')
                 <li class="{{ request()->is('admin/order/due/list') ? 'mm-active' : '' }}">
                     <a href="#" class=""><i class="mdi mdi-calculator"></i><span> {{

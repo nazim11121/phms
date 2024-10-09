@@ -30,13 +30,13 @@ class StockListDataTable extends DataTable
                 $buttons = '';
             })->editColumn('medicine.name', function ($item) {
                 return $item->medicine->name ?? ''; 
-            })->editColumn('entry_date', function ($item) {
+            })->editColumn('created_at', function ($item) {
                 $date = date('d-m-Y', strtotime($item->created_at));
                 return $date ?? '';   
-            })->editColumn('expired.date', function ($item) {
+            })->editColumn('expired_date', function ($item) {
                 $date = date('d-m-Y', strtotime($item->expired_date));
                 return $date ?? '';  
-            })->rawColumns(['entry_date','action'])->addIndexColumn();
+            })->rawColumns(['created_at','expired_date','action'])->addIndexColumn();
     }
 
     /**
@@ -54,7 +54,7 @@ class StockListDataTable extends DataTable
             ->get();
 
         // Now, fetch the full details of the latest entries
-        return $model->newQuery()->whereIn('id', $latestSellings->pluck('latest_id'));
+        return $model->newQuery()->with('medicine')->whereIn('id', $latestSellings->pluck('latest_id'));
     
     }
 
@@ -90,8 +90,8 @@ class StockListDataTable extends DataTable
             Column::make('available_stock', 'available_stock')->title(__('custom.available_stock')),
             Column::make('buying_price', 'buying_price')->title(__('custom.buying_price')),
             Column::make('selling_price', 'selling_price')->title(__('custom.selling_price')),
-            Column::make('entry_date', 'entry_date')->title(__('custom.entry_date')),
-            Column::make('expired.date', 'expired.date')->title(__('custom.expired_date')),
+            Column::make('created_at', 'created_at')->title(__('custom.entry_date')),
+            Column::make('expired_date', 'expired_date')->title(__('custom.expired_date')),
         ];
     }
 

@@ -60,7 +60,7 @@ class SuplierDataTable extends DataTable
      */
     public function query(Suplier $model)
     {
-        return $model->newQuery()->orderBy('id','desc');
+        return $model->newQuery()->with('brand')->orderBy('id','desc');
     }
 
     /**
@@ -103,7 +103,7 @@ class SuplierDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Suplier_' . date('YmdHis');
+        return 'Supplier_' . date('YmdHis');
     }
 
     /**

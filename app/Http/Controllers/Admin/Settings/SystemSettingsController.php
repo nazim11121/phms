@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin\Settings;
 
 use Illuminate\Http\Request;
+use App\Models\Subscription;
 use App\Models\SystemSettings;
 use App\Http\Controllers\Controller;
 use App\Services\Utils\FileUploadService;
 use Spatie\Permission\Models\Role;
+use Auth;
 
 class SystemSettingsController extends Controller
 {
@@ -36,13 +38,14 @@ class SystemSettingsController extends Controller
         $settings = [];
         $raw_settings = SystemSettings::all();
         $roles = Role::query()->pluck('name', 'id');
+        $currentSubscription = Subscription::latest()->get()->first();
 
         foreach ($raw_settings as $s) {
             $settings[$s->settings_key] = $s->settings_value;
         }
 
         set_page_meta('System Settings');
-        return view('admin.system_settings.edit', compact('settings', 'roles'));
+        return view('admin.system_settings.edit', compact('settings', 'roles', 'currentSubscription'));
     }
 
     /**
@@ -59,39 +62,67 @@ class SystemSettingsController extends Controller
  
         if($request['general']['store_name'] == $key1 && $key2==1){
 
-            // Set site logo
-            $data = $this->uploadImage($data, 'site_logo');
-            // Set favicon
-            $data = $this->uploadImage($data, 'favicon');
-            // Set login background
-            $data = $this->uploadImage($data, 'login_background');
-            // Set login slider image
-            $data = $this->uploadImage($data, 'login_slider_image_1');
-            $data = $this->uploadImage($data, 'login_slider_image_2');
-            $data = $this->uploadImage($data, 'login_slider_image_3');
-            $data = $this->uploadImage($data, 'login_slider_image_m_1');
-            $data = $this->uploadImage($data, 'login_slider_image_m_2');
-            $data = $this->uploadImage($data, 'login_slider_image_m_3');
+            if(!empty($request['subscription']['editable'])){
+                if (Subscription::where('month', $request['subscription']['month'])->exists()) {
+                    flash('Duplicate entry for Subscription')->success();
+                    return redirect()->back();
+                }else{
+                    $subscription = New Subscription();
+                    $subscription->invoice_no = rand('111','999');
+                    $subscription->month = $request['subscription']['month'];
+                    $subscription->payable_amount = $request['subscription']['payable_amount'];
+                    $subscription->trx_id = $request['subscription']['trax_id'];
+                    $subscription->active_status = $request['subscription']['active_status'];
+                    $subscription->created_by = Auth::id();
+                    $subscription->save();
+                    
+                    flash('Thank you for Subscription')->success();
+                    return redirect()->back();
+                }
+                
 
+            }else{
 
-            $keys = array_keys($data);
+                // Set site logo
+                $data = $this->uploadImage($data, 'site_logo');
+                // Set favicon
+                $data = $this->uploadImage($data, 'favicon');
+                // Set login background
+                $data = $this->uploadImage($data, 'login_background');
+                // Set login slider image
+                $data = $this->uploadImage($data, 'login_slider_image_1');
+                $data = $this->uploadImage($data, 'login_slider_image_2');
+                $data = $this->uploadImage($data, 'login_slider_image_3');
+                $data = $this->uploadImage($data, 'login_slider_image_m_1');
+                $data = $this->uploadImage($data, 'login_slider_image_m_2');
+                $data = $this->uploadImage($data, 'login_slider_image_m_3');
 
-            foreach ($keys as $key) {
-                $settings = SystemSettings::where('settings_key', $key)->first();
-                if (!$settings) $settings = new SystemSettings();
+                // dd($request['general']['stock_control']);
+                if(!empty($request['general']['stock_control'])){
+                    $data['general']['stock_control'] = 1;
+                }else{
+                    $data['general']['stock_control'] = 0;
+                }
 
-                $settings->settings_key = $key;
-                $settings->settings_value = $data[$key];
-                $settings->save();
+                $keys = array_keys($data);
 
-            }
+                foreach ($keys as $key) {
+                    $settings = SystemSettings::where('settings_key', $key)->first();
+                    if (!$settings) $settings = new SystemSettings();
 
-            if(array_key_exists('timezone', $data['general'])){
-                envWrite('APP_TIMEZONE', $data['general']['timezone']);
-            }
+                    $settings->settings_key = $key;
+                    $settings->settings_value = $data[$key];
+                    $settings->save();
 
-            flash('System settings updated successfully')->success();
-            return redirect()->back();
+                }
+
+                if(array_key_exists('timezone', $data['general'])){
+                    envWrite('APP_TIMEZONE', $data['general']['timezone']);
+                }
+
+                flash('System settings updated successfully')->success();
+                return redirect()->back();
+            }    
         }else{
             $path = base_path('routes/admin.php');
             if(file_exists($path)){
@@ -132,4 +163,5 @@ class SystemSettingsController extends Controller
 
         return $data;
     }
+    
 }

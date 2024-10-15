@@ -6,8 +6,7 @@
 'body' => $message['message']
 ])
 @else
-<div class="alert m-t-30
-                    alert-{{ $message['level'] }}
+<div class="alert alert-{{ $message['level'] }}
                     {{ $message['important'] ? 'alert-important' : '' }}" role="alert" style="background:#28AAA9;color:white;text-align:center;margin-top:8%!important;">
     @if ($message['important'])
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

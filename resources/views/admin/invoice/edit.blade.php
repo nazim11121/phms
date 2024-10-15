@@ -16,7 +16,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title">{{ __t('add_invoice') }}</h4>
+                <h4 class="header-title">{{ __('Edit Invoice') }}</h4>
                 <div class="container">
                     <div class="row">
                         <!-- Product Cards -->
@@ -46,9 +46,6 @@
                                                     @if($product->available_stock>0)
                                                         <button class="btn btn-primary btn-sm add-to-cart-btn text-center mt-1" style="float:left"><i class="fa fa-shopping-cart"></i></button>
                                                         <a class="btn btn-sm btn-success mt-1" href="#" onclick="openStockUpdateModal(this)" data-toggle="modal" data-target="#myStockUpdateModal" data-value="{{$product->id}}" style="padding: 1px 7px;float:right"><i class="fa fa-plus"></i></a>
-                                                    @elseif($stockControl==1)
-                                                        <button class="btn btn-primary btn-sm add-to-cart-btn text-center mt-1" style="float:left"><i class="fa fa-shopping-cart"></i></button>
-                                                        <a class="btn btn-sm btn-success mt-1" href="#" onclick="openStockUpdateModal(this)" data-toggle="modal" data-target="#myStockUpdateModal" data-value="{{$product->id}}" style="padding: 1px 7px;float:right"><i class="fa fa-plus"></i></a>
                                                     @else
                                                         <button class="btn btn-danger btn-sm add-to-cart-btn text-center" style="font-size: smaller;float:left" disabled>StockOut</button>
                                                         <a class="btn btn-sm btn-success mt-1" href="#" onclick="openStockUpdateModal(this)" data-toggle="modal" data-target="#myStockUpdateModal" data-value="{{$product->id}}" style="padding: 1px 7px;float:right"><i class="fa fa-plus"></i></a>
@@ -69,11 +66,11 @@
                                 <div class="row">
                                     <label>Name: </label>
                                     <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="customer_name" id="customer_name">
+                                    <input type="text" class="form-control" name="customer_name" id="customer_name" value="{{$invoice->customer_name}}">
                                     </div>
                                     <label>Mobile: </label>
                                     <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="customer_mobile" id="customer_mobile">
+                                    <input type="text" class="form-control" name="customer_mobile" id="customer_mobile" value="{{$invoice->customer_mobile}}">
                                     </div>
                                 </div>
                             </div>
@@ -89,38 +86,47 @@
                                         </tr>
                                     </thead>
                                     <tbody id="cart-items-list">
+                                        @foreach($invoice->sku as $id => $item)
+                                            <tr data-id="{{ $id }}" data-invoice="{{$invoice->id}}">
+                                                <td>{{ $item->medicine->name }}</td>
+                                                <td>{{ $item->price }}</td>
+                                                <td><input type="number" class="form-control quantity-input" data-index="{{$id}}" value="{{ $item->quantity }}" min="1"></td>
+                                                <td>{{ $item->price * $item->quantity }}</td>
+                                                <td><button class="btn btn-danger btn-sm remove-item-btn" data-index="{{$id}}"><i class="fa fa-trash"></i></button></td>
+                                            </tr>
+                                        @endforeach
                                         <!-- Cart items will be dynamically added here -->
                                     </tbody>
                                 </table>
                             </div>
-                            <h5>SubTotal: ৳<span id="total-amount">0</span></h5>
-                            <input type="hidden" name="total" id="total">
+                            <h5>SubTotal: ৳<span id="total-amount">{{$invoice->total}}</span></h5>
+                            <input type="hidden" name="total" id="total" value="{{$invoice->total}}">
                             
                             <div class="form-inline">
                                 <label>Discount(%)</label>
                                 <div class="col-sm-3">
-                                    <input type="number" class="form-control" name="discount" id="discount" min="0">
+                                    <input type="number" class="form-control" name="discount" id="discount" value="{{$invoice->discount_percentage}}" min="0">
                                 </div>
                             </div>
-                            <h5>GrandTotal: ৳<span id="grand-total">0</span></h5>
-                            <input type="hidden" name="grand_total" id="grand_total">
+                            <h5>GrandTotal: ৳<span id="grand-total">{{$invoice->grand_total}}</span></h5>
+                            <input type="hidden" name="grand_total" id="grand_total" value="{{$invoice->grand_total}}">
                             <div class="form-inline mb-4">
                                 
                                 <label>Pay Amount</label>
                                 <div class="col-sm-4 mr-4">
-                                    <input type="number" class="form-control" name="payable_amount" id="payable_amount" min="0">
+                                    <input type="number" class="form-control" name="payable_amount" id="payable_amount" value="{{$invoice->payable_amount}}" min="0">
                                 </div>
                                 <div class="col-sm-4 ml-2">
                                     <select class="select2 form-control" name="payment_method" id="payment_method">
-                                        <option value="Cash">Cash</option>
-                                        <option value="Bkash">Bkash</option>
-                                        <option value="Nagad">Nagad</option>
-                                        <option value="Rocket">Rocket</option>
-                                        <option value="Card">Card</option>
+                                        <option value="Cash" {{$invoice->payment_method=='Cash'?'selected':''}}>Cash</option>
+                                        <option value="Bkash" {{$invoice->payment_method=='Bkash'?'selected':''}}>Bkash</option>
+                                        <option value="Nagad" {{$invoice->payment_method=='Nagad'?'selected':''}}>Nagad</option>
+                                        <option value="Rocket" {{$invoice->payment_method=='Rocket'?'selected':''}}>Rocket</option>
+                                        <option value="Card" {{$invoice->payment_method=='Card'?'selected':''}}>Card</option>
                                     </select>
                                 </div>
                             </div>
-                            <button class="btn btn-success" id="place-order">Place Order</button>
+                            <button class="btn btn-success" id="place-order">Update</button>
                             <button class="btn btn-danger" id="reset-btn">Reset</button>
                         </div>
                     </div>
@@ -359,14 +365,102 @@
 @endpush
 
 @push('script')
+<!-- test -->
+    <script>
+        // Add medicine to cart
+        $('.add-to-cart').click(function () {
+            var id = $(this).data('id');
+            $.ajax({
+                url: "{{ url('/admin/invoice/cart/add') }}",
+                method: "POST",
+                data: { id: id, _token: '{{ csrf_token() }}' },
+                success: function (response) {
+                    updateCartView(response.cart, response.grandTotal);
+                }
+            });
+        });
 
+        // Update quantity in cart
+        $(document).on('change', '.quantity-input', function () {console.log('hi');
+            var id = $(this).closest('tr').data('id');
+            var invoice = $(this).closest('tr').data('invoice');
+            var quantity = $(this).val();
+            $.ajax({
+                url: "{{ url('admin/invoice/data/add-to-cart/update') }}",
+                method: "POST",
+                data: { id: id, invoice: invoice, quantity: quantity, _token: '{{ csrf_token() }}' },
+                success: function (response) {
+                    updateCartView(response.cart, response.grandTotal);
+                }
+            });
+        });
+
+        // Remove item from cart
+        // $(document).on('click', '.remove-from-cart', function () {
+        //     var id = $(this).closest('tr').data('id');
+        //     $.ajax({
+        //         url: "{{ url('cart/remove') }}",
+        //         method: "POST",
+        //         data: { id: id, _token: '{{ csrf_token() }}' },
+        //         success: function (response) {
+        //             updateCartView(response.cart, response.grandTotal);
+        //         }
+        //     });
+        // });
+
+        // Apply discount
+        $('#discount').change(function () {
+            var discount = $(this).val();
+            $.ajax({
+                url: "{{ url('cart/apply-discount') }}",
+                method: "POST",
+                data: { discount: discount, _token: '{{ csrf_token() }}' },
+                success: function (response) {
+                    $('#grand-total').text(response.grandTotal);
+                }
+            });
+        });
+
+        // Update the cart table and grand total view
+        function updateCartView(cart, grandTotal) {
+            var cartItems = $('#cart-items-list');
+            cartItems.empty(); // Clear the table body
+
+            $.each(cart['0']['sku'], function (id, item) {
+                cartItems.append(`
+                    <tr data-id="${id}">
+                        <td>${item.medicine.name}</td>
+                        <td>${item.price}</td>
+                        <td><input type="number" class="form-control quantity" value="${item.quantity}"></td>
+                        <td>${item.price * item.quantity}</td>
+                        <td><button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                `);
+            });
+
+            $('#grand-total').text(grandTotal); // Update grand total
+        }
+    </script>
 <!-- Product add to cart and calculation start -->
-<script>
+<!-- <script>
     $(document).ready(function() {
         var totalAmount = 0;
         var discountPercentage = 0;
         var discountAmount = 0;
         var cart = [];
+
+        cart.push({
+            id: $('#cart-items-list').data('id'),
+            // name: $('.name').val(),
+            // price: $('.price').val(),
+            quantity: $('.quantity-input').val()
+        });
+        // update existing items
+        $('.quantity-input').on('input', function() {
+            var index = $(this).data('index');
+            cart[index].quantity = $(this).val();   
+            updateCartDisplay();
+        });
 
         // Add product to cart on button click
         $('.add-to-cart-btn').on('click', function() {
@@ -396,25 +490,25 @@
         function updateCartDisplay() {
             var totalAmount = 0;
             var cartHtml = '';
-
+console.log(cart);
             cart.forEach(function(item, index) {
                 var productTotal = item.price * item.quantity;
                 totalAmount += productTotal;
                 cart[index].subtotal = productTotal;
-
-                cartHtml += `
-                    <tr data-index="${index}">
-                        <td>${item.name}</td>
+                var cartItems = $('#cart-items-list');
+                $.each(cart, function (id, item) {
+                cartItems.append(`
+                    <tr data-id="${id}">
+                        <td>${item.medicine.name}</td>
                         <td>${item.price}</td>
-                        <td>
-                            <input type="number" class="form-control quantity-input" data-index="${index}" value="${item.quantity}" min="1">
-                        </td>
-                        <td>${productTotal}</td>
+                        <td><input type="number" class="form-control quantity-input" data-index="${index}" value="${item.quantity}" min="1"></td>
+                        <td>${item.price * item.quantity}</td>
                         <td>
                             <button class="btn btn-sm btn-danger remove-item-btn" data-index="${index}"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
-                `;
+                `);
+            });
             });
 
             $('#cart-items tbody').html(cartHtml);
@@ -424,7 +518,7 @@
             $('#grand_total').val(totalAmount.toFixed(2));
 
             // Update cart when quantity changes
-            $('.quantity-input').on('input', function() {
+            $('.quantity-input').on('input', function() {console.log('hi2');
                 var index = $(this).data('index');
                 cart[index].quantity = $(this).val();
                 updateCartDisplay();
@@ -544,7 +638,7 @@
             location.reload(true);
         }
     });
-</script>
+</script> -->
 <!-- End -->
 <!-- Search Script Start -->
 <script>

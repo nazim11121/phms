@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Models\Customer;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -33,12 +34,22 @@ class LoginController extends Controller
 
         $credentials  = array('email' => $request->email, 'password' => $request->password);
         if (auth()->attempt($credentials, $request->has('remember'))) {
-            // Admin user
-            // if (auth()->user()->user_type == User::USER_TYPE_SYSTEM_ADMIN) {
-            
-            return  redirect()->route('admin.dashboard');
-            // }
-dd("hi");
+          
+            if (auth()->user()->roles[0]->name == 'Admin2') {
+                $subscriptionCheck = Subscription::latest()->get();
+                $currentMonth = date('F').date('y');
+                foreach($subscriptionCheck as $array){
+                    if($currentMonth==$array["month"]){
+                        return redirect()->route('admin.dashboard');
+                    }else{
+                        flash('Your Subscription Month is Over. Please Pay for Subscription.')->success();
+                        return redirect()->back();
+                    }
+                }
+            }else{
+                return redirect()->route('admin.dashboard');
+            }
+
             return redirect('/');
         }
         elseif (auth()->guard('customer')->attempt($credentials, $request->has('remember'))) {

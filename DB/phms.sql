@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 06, 2024 at 10:50 AM
+-- Generation Time: Oct 15, 2024 at 04:18 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.18
 
@@ -78,15 +78,77 @@ CREATE TABLE IF NOT EXISTS `ic_brands` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_brands`
 --
 
 INSERT INTO `ic_brands` (`id`, `name`, `mobile`, `email`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'ACI', NULL, NULL, 'Active', 1, 1, '2024-09-26 14:40:24', '2024-09-26 14:40:57'),
-(3, 'Popular', NULL, NULL, 'Active', 1, 1, '2024-09-26 14:47:49', '2024-09-26 16:11:14');
+(1, 'Square', NULL, NULL, 'Active', 1, 1, '2024-09-26 14:40:24', '2024-09-26 14:40:57'),
+(2, 'Incepta', NULL, NULL, 'Active', 1, 1, '2024-09-26 14:47:49', '2024-09-26 16:11:14'),
+(3, 'Beximco', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:13:31', '2024-10-06 15:13:31'),
+(4, 'Opsonin', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:13:46', '2024-10-06 15:13:46'),
+(5, 'Renata', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:13:56', '2024-10-06 15:13:56'),
+(6, 'Healthcare', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:14:59', '2024-10-06 15:14:59'),
+(7, 'ACI', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:15:10', '2024-10-06 15:15:10'),
+(8, 'Eskayef', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:15:27', '2024-10-06 15:15:27'),
+(9, 'ACME', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:15:38', '2024-10-06 15:15:38'),
+(10, 'Aristopharma', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:15:49', '2024-10-06 15:15:49'),
+(11, 'Ad-din', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:18:52', '2024-10-06 15:18:52'),
+(12, 'Aexim', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:19:18', '2024-10-06 15:19:18'),
+(13, 'Al-Madina', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:19:48', '2024-10-06 15:19:48'),
+(14, 'Albion', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:20:11', '2024-10-06 15:20:11'),
+(15, 'Alco', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:20:33', '2024-10-06 15:20:33'),
+(16, 'Apollo', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:21:06', '2024-10-06 15:21:06'),
+(17, 'Asiatic', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:21:38', '2024-10-06 15:21:38'),
+(18, 'Astra', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:21:54', '2024-10-06 15:21:54'),
+(19, 'Beacon', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:22:13', '2024-10-06 15:22:13'),
+(20, 'Bengal', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:22:54', '2024-10-06 15:22:54'),
+(21, 'Benham', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:23:22', '2024-10-06 15:23:22'),
+(22, 'Biogen', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:23:51', '2024-10-06 15:23:51'),
+(23, 'Biopharma', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:24:10', '2024-10-06 15:24:10'),
+(24, 'Bristol', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:24:41', '2024-10-06 15:24:41'),
+(25, 'Delta', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:25:05', '2024-10-06 15:25:05'),
+(26, 'Decent', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:25:22', '2024-10-06 15:25:22'),
+(27, 'Cosmo', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:25:55', '2024-10-06 15:25:55'),
+(28, 'Cosmic', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:26:12', '2024-10-06 15:26:12'),
+(29, 'Chemist', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:26:29', '2024-10-06 15:26:29'),
+(30, 'Concord', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:26:44', '2024-10-06 15:26:44'),
+(31, 'Derma Health Care', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:27:07', '2024-10-06 15:27:07'),
+(32, 'Drug International Ltd', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:27:35', '2024-10-06 15:27:35'),
+(33, 'General', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:28:29', '2024-10-06 15:28:29'),
+(34, 'FnF', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:28:51', '2024-10-06 15:28:51'),
+(35, 'Euro', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:29:08', '2024-10-06 15:29:08'),
+(36, 'Ethical', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:29:23', '2024-10-06 15:29:23'),
+(37, 'Globe', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:29:50', '2024-10-06 15:29:50'),
+(38, 'Globex', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:30:02', '2024-10-06 15:30:02'),
+(39, 'Greenland', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:30:25', '2024-10-06 15:30:25'),
+(40, 'GSK', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:30:39', '2024-10-06 15:30:39'),
+(41, 'Institute of Public Health', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:31:45', '2024-10-06 15:31:45'),
+(42, 'Ibn Sina', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:32:09', '2024-10-06 15:32:09'),
+(43, 'Labaid', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:32:37', '2024-10-06 15:32:37'),
+(44, 'Lexicon', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:32:55', '2024-10-06 15:32:55'),
+(45, 'Medicon', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:33:33', '2024-10-06 15:33:33'),
+(46, 'Modern', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:33:51', '2024-10-06 15:33:51'),
+(47, 'National Drug', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:34:28', '2024-10-06 15:34:28'),
+(48, 'Navana', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:34:45', '2024-10-06 15:34:45'),
+(49, 'NEMUS', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:34:58', '2024-10-06 15:34:58'),
+(50, 'One Pharma', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:35:50', '2024-10-06 15:35:50'),
+(51, 'Opsonin Herbal & Nutraceuticals Ltd', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:36:06', '2024-10-06 15:36:06'),
+(52, 'OSL', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:36:45', '2024-10-06 15:36:45'),
+(53, 'Peoples', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:37:04', '2024-10-06 15:37:04'),
+(54, 'Pacific', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:37:18', '2024-10-06 15:37:18'),
+(55, 'Prime', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:37:38', '2024-10-06 15:37:38'),
+(56, 'Popular', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:37:54', '2024-10-06 15:37:54'),
+(57, 'Radiant Pharmaceuticals Ltd', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:38:36', '2024-10-06 15:38:36'),
+(58, 'Radiant Nutraceuticals Ltd', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:44:10', '2024-10-06 15:44:10'),
+(59, 'Skylab', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:45:05', '2024-10-06 15:45:05'),
+(60, 'Somatec', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:45:24', '2024-10-06 15:45:24'),
+(61, 'Team', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:46:07', '2024-10-06 15:46:07'),
+(62, 'Unilever', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:46:31', '2024-10-06 15:46:31'),
+(63, 'Ziska', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:47:05', '2024-10-06 15:47:05'),
+(64, 'Zenith', NULL, NULL, 'Active', 1, NULL, '2024-10-06 15:47:19', '2024-10-06 15:47:19');
 
 -- --------------------------------------------------------
 
@@ -217,14 +279,15 @@ CREATE TABLE IF NOT EXISTS `ic_groups` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_groups`
 --
 
 INSERT INTO `ic_groups` (`id`, `name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'Paracitamol', 'Active', 1, 1, '2024-09-26 09:03:16', '2024-09-26 14:14:44');
+(1, 'Paracitamol', 'Active', 1, 1, '2024-09-26 09:03:16', '2024-09-26 14:14:44'),
+(5, 'Domperidom', 'Active', 1, NULL, '2024-10-07 11:18:11', '2024-10-07 11:18:11');
 
 -- --------------------------------------------------------
 
@@ -252,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `ic_invoices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_invoices`
@@ -260,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `ic_invoices` (
 
 INSERT INTO `ic_invoices` (`id`, `invoice_no`, `total`, `discount_percentage`, `discount_amount`, `delivery_charge`, `grand_total`, `payable_amount`, `due`, `payment_method`, `payment_status`, `customer_name`, `customer_mobile`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (25, '241005856', '60.00', '10', '6', '0', '54.00', '54', '0', 'Cash', 'Paid', 'Mohi', '0198765432', 1, NULL, '2024-10-05 06:39:21', '2024-10-05 06:39:21'),
-(40, '241005714', '30.00', '10', '3', '0', '27.00', '27', '0', 'Cash', 'Paid', 'Morshed', '0198765432', 1, NULL, '2024-10-05 07:28:24', '2024-10-05 07:28:24');
+(53, '241013246', '12.00', '0', '0', '0', '12.00', '12', '0', 'Cash', 'Paid', NULL, NULL, 1, NULL, '2024-10-13 04:54:07', '2024-10-13 04:54:07');
 
 -- --------------------------------------------------------
 
@@ -281,7 +344,7 @@ CREATE TABLE IF NOT EXISTS `ic_invoice_skus` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_invoice_skus`
@@ -290,8 +353,7 @@ CREATE TABLE IF NOT EXISTS `ic_invoice_skus` (
 INSERT INTO `ic_invoice_skus` (`id`, `invoice_id`, `product_id`, `price`, `quantity`, `subtotal`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (36, '25', '3', '12', '3', '36', 1, NULL, '2024-10-05 06:39:21', '2024-10-05 06:39:21'),
 (37, '25', '6', '12', '2', '24', 1, NULL, '2024-10-05 06:39:21', '2024-10-05 06:39:21'),
-(54, '40', '3', '12', '2', '24', 1, NULL, '2024-10-05 07:28:24', '2024-10-05 07:28:24'),
-(55, '40', '7', '6', '1', '6', 1, NULL, '2024-10-05 07:28:24', '2024-10-05 07:28:24');
+(68, '53', '7', '6', '2', '12', 1, NULL, '2024-10-13 04:54:07', '2024-10-13 04:54:07');
 
 -- --------------------------------------------------------
 
@@ -314,17 +376,18 @@ CREATE TABLE IF NOT EXISTS `ic_medicine_adds` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_medicine_adds`
 --
 
 INSERT INTO `ic_medicine_adds` (`id`, `name`, `group_id`, `brand_id`, `type_id`, `available_stock`, `suplier_id`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(3, 'Napa Extend', '1', '1', '1', '501', '1', 'Active', 1, 1, '2024-09-28 04:56:01', '2024-10-06 06:20:46'),
+(3, 'Napa Extend', '1', '1', '1', '503', '1', 'Active', 1, 1, '2024-09-28 04:56:01', '2024-10-13 05:59:57'),
 (5, 'Rapid', '1', '3', '1', '6', '1', 'Active', 1, NULL, '2024-10-01 16:34:01', '2024-10-06 10:49:30'),
 (6, 'Plain Napa', '1', '1', '1', '12', '1', 'Active', 1, NULL, '2024-10-01 17:11:17', '2024-10-06 10:41:02'),
-(7, 'Aci clofenac', '1', '3', '1', '2', '1', 'Active', 1, NULL, '2024-10-01 17:12:02', '2024-10-05 07:28:24');
+(7, 'Aci clofenac', '1', '3', '1', '1', '1', 'Active', 1, NULL, '2024-10-01 17:12:02', '2024-10-13 05:59:57'),
+(8, 'Vomitop', '5', '1', '1', '110', '1', 'Active', 1, NULL, '2024-10-07 11:18:59', '2024-10-07 11:18:59');
 
 -- --------------------------------------------------------
 
@@ -454,7 +517,7 @@ CREATE TABLE IF NOT EXISTS `ic_model_has_roles` (
 INSERT INTO `ic_model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (7, 'App\\Models\\User', 2),
 (6, 'App\\Models\\User', 1),
-(8, 'App\\Models\\User', 4);
+(9, 'App\\Models\\User', 5);
 
 -- --------------------------------------------------------
 
@@ -640,7 +703,7 @@ CREATE TABLE IF NOT EXISTS `ic_permissions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_permissions`
@@ -723,7 +786,8 @@ INSERT INTO `ic_permissions` (`id`, `parent_id`, `name`, `group_name`, `guard_na
 (148, NULL, 'Order-Management', 'Order-Management', 'web', '2023-05-08 10:39:04', '2023-05-08 10:39:04'),
 (149, 148, 'Order List', 'Order-Management', 'web', '2023-05-08 10:42:12', '2023-05-08 10:42:12'),
 (151, 1, 'Total Orders', 'Dashboard', 'web', '2023-10-05 11:31:30', '2023-10-05 11:31:30'),
-(152, 1, 'Salary List', 'Salary List', 'web', '2024-08-28 05:07:28', '2024-08-28 05:07:28');
+(152, 1, 'Salary List', 'Salary List', 'web', '2024-08-28 05:07:28', '2024-08-28 05:07:28'),
+(153, 139, 'subscription-btn', 'Settings', 'web', '2024-10-14 11:38:44', '2024-10-14 11:39:47');
 
 -- --------------------------------------------------------
 
@@ -758,6 +822,35 @@ INSERT INTO `ic_personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ic_purchases`
+--
+
+DROP TABLE IF EXISTS `ic_purchases`;
+CREATE TABLE IF NOT EXISTS `ic_purchases` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `purchase_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `medicine_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` int DEFAULT NULL,
+  `created_by` bigint UNSIGNED DEFAULT NULL,
+  `updated_by` bigint UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ic_purchases`
+--
+
+INSERT INTO `ic_purchases` (`id`, `purchase_no`, `medicine_id`, `quantity`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(17, '241009185', '3', 2, NULL, NULL, '2024-10-09 17:17:04', '2024-10-09 17:17:04'),
+(18, '241009185', '6', 4, NULL, NULL, '2024-10-09 17:17:04', '2024-10-09 17:17:04'),
+(19, '241009185', '8', 5, NULL, NULL, '2024-10-09 17:17:04', '2024-10-09 17:17:04'),
+(20, '241010483', '5', 2, NULL, NULL, '2024-10-09 18:53:08', '2024-10-09 18:53:08');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ic_roles`
 --
 
@@ -769,7 +862,7 @@ CREATE TABLE IF NOT EXISTS `ic_roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_roles`
@@ -779,7 +872,7 @@ INSERT INTO `ic_roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) 
 (1, 'Super Admin', 'web', '2022-11-15 23:12:45', '2022-11-15 23:12:45'),
 (6, 'Admin', 'web', '2023-11-06 10:37:00', '2023-11-06 10:37:00'),
 (7, 'Customer', 'web', '2023-11-06 10:45:55', '2023-11-06 10:45:55'),
-(8, 'Receiption', 'web', '2024-09-10 12:40:06', '2024-09-10 12:40:06');
+(9, 'Admin2', 'web', '2024-10-14 12:11:36', '2024-10-14 12:11:36');
 
 -- --------------------------------------------------------
 
@@ -798,81 +891,6 @@ CREATE TABLE IF NOT EXISTS `ic_role_has_permissions` (
 --
 
 INSERT INTO `ic_role_has_permissions` (`permission_id`, `role_id`) VALUES
-(1, 1),
-(2, 1),
-(4, 1),
-(10, 1),
-(18, 1),
-(151, 1),
-(24, 1),
-(25, 1),
-(26, 1),
-(27, 1),
-(28, 1),
-(29, 1),
-(30, 1),
-(31, 1),
-(32, 1),
-(33, 1),
-(34, 1),
-(35, 1),
-(36, 1),
-(37, 1),
-(38, 1),
-(39, 1),
-(40, 1),
-(41, 1),
-(48, 1),
-(49, 1),
-(50, 1),
-(51, 1),
-(52, 1),
-(90, 1),
-(91, 1),
-(92, 1),
-(93, 1),
-(94, 1),
-(95, 1),
-(96, 1),
-(97, 1),
-(98, 1),
-(99, 1),
-(100, 1),
-(106, 1),
-(107, 1),
-(108, 1),
-(109, 1),
-(110, 1),
-(111, 1),
-(112, 1),
-(113, 1),
-(114, 1),
-(115, 1),
-(116, 1),
-(117, 1),
-(118, 1),
-(119, 1),
-(120, 1),
-(121, 1),
-(122, 1),
-(123, 1),
-(124, 1),
-(125, 1),
-(126, 1),
-(127, 1),
-(128, 1),
-(134, 1),
-(135, 1),
-(138, 1),
-(139, 1),
-(140, 1),
-(141, 1),
-(142, 1),
-(143, 1),
-(144, 1),
-(147, 1),
-(148, 1),
-(149, 1),
 (1, 7),
 (2, 7),
 (1, 6),
@@ -882,6 +900,7 @@ INSERT INTO `ic_role_has_permissions` (`permission_id`, `role_id`) VALUES
 (11, 6),
 (18, 6),
 (151, 6),
+(152, 6),
 (24, 6),
 (25, 6),
 (26, 6),
@@ -944,6 +963,7 @@ INSERT INTO `ic_role_has_permissions` (`permission_id`, `role_id`) VALUES
 (138, 6),
 (139, 6),
 (140, 6),
+(153, 6),
 (141, 6),
 (142, 6),
 (143, 6),
@@ -951,60 +971,137 @@ INSERT INTO `ic_role_has_permissions` (`permission_id`, `role_id`) VALUES
 (147, 6),
 (148, 6),
 (149, 6),
-(152, 6),
-(1, 8),
-(2, 8),
-(4, 8),
-(10, 8),
-(11, 8),
-(18, 8),
-(151, 8),
-(152, 8),
-(36, 8),
-(37, 8),
-(38, 8),
-(39, 8),
-(40, 8),
-(41, 8),
-(48, 8),
-(49, 8),
-(50, 8),
-(51, 8),
-(52, 8),
-(95, 8),
-(96, 8),
-(97, 8),
-(98, 8),
-(99, 8),
-(100, 8),
-(106, 8),
-(107, 8),
-(108, 8),
-(109, 8),
-(110, 8),
-(111, 8),
-(112, 8),
-(113, 8),
-(114, 8),
-(115, 8),
-(116, 8),
-(117, 8),
-(118, 8),
-(119, 8),
-(120, 8),
-(121, 8),
-(122, 8),
-(123, 8),
-(124, 8),
-(125, 8),
-(126, 8),
-(127, 8),
-(128, 8),
-(134, 8),
-(135, 8),
-(138, 8),
-(148, 8),
-(149, 8);
+(1, 1),
+(2, 1),
+(4, 1),
+(10, 1),
+(11, 1),
+(18, 1),
+(151, 1),
+(152, 1),
+(24, 1),
+(25, 1),
+(26, 1),
+(27, 1),
+(28, 1),
+(29, 1),
+(30, 1),
+(31, 1),
+(32, 1),
+(33, 1),
+(34, 1),
+(35, 1),
+(36, 1),
+(37, 1),
+(38, 1),
+(39, 1),
+(40, 1),
+(41, 1),
+(48, 1),
+(49, 1),
+(50, 1),
+(51, 1),
+(52, 1),
+(90, 1),
+(91, 1),
+(92, 1),
+(93, 1),
+(94, 1),
+(95, 1),
+(96, 1),
+(97, 1),
+(98, 1),
+(99, 1),
+(100, 1),
+(106, 1),
+(107, 1),
+(108, 1),
+(109, 1),
+(110, 1),
+(111, 1),
+(112, 1),
+(113, 1),
+(114, 1),
+(115, 1),
+(116, 1),
+(117, 1),
+(118, 1),
+(119, 1),
+(120, 1),
+(121, 1),
+(122, 1),
+(123, 1),
+(124, 1),
+(125, 1),
+(126, 1),
+(127, 1),
+(128, 1),
+(134, 1),
+(135, 1),
+(138, 1),
+(139, 1),
+(140, 1),
+(153, 1),
+(141, 1),
+(142, 1),
+(143, 1),
+(144, 1),
+(147, 1),
+(148, 1),
+(149, 1),
+(1, 9),
+(2, 9),
+(4, 9),
+(10, 9),
+(11, 9),
+(18, 9),
+(151, 9),
+(152, 9),
+(36, 9),
+(37, 9),
+(38, 9),
+(39, 9),
+(40, 9),
+(41, 9),
+(48, 9),
+(49, 9),
+(50, 9),
+(51, 9),
+(52, 9),
+(95, 9),
+(96, 9),
+(97, 9),
+(98, 9),
+(99, 9),
+(100, 9),
+(106, 9),
+(107, 9),
+(108, 9),
+(109, 9),
+(110, 9),
+(111, 9),
+(112, 9),
+(113, 9),
+(114, 9),
+(115, 9),
+(116, 9),
+(117, 9),
+(118, 9),
+(119, 9),
+(120, 9),
+(121, 9),
+(122, 9),
+(123, 9),
+(124, 9),
+(125, 9),
+(126, 9),
+(127, 9),
+(128, 9),
+(134, 9),
+(135, 9),
+(138, 9),
+(148, 9),
+(149, 9);
 
 -- --------------------------------------------------------
 
@@ -1080,7 +1177,7 @@ CREATE TABLE IF NOT EXISTS `ic_stocks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_stocks`
@@ -1088,14 +1185,45 @@ CREATE TABLE IF NOT EXISTS `ic_stocks` (
 
 INSERT INTO `ic_stocks` (`id`, `medicine_id`, `previous`, `new`, `available_stock`, `buying_price`, `selling_price`, `expired_date`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, '3', '0', '500', '500', '3', '4', '2024-09-27', 1, 1, '2024-09-28 04:56:01', '2024-10-03 16:21:00'),
-(6, '3', '500', '511', '501', '11', '12', '2024-10-29', NULL, 1, '2024-09-28 16:25:00', '2024-10-06 06:20:46'),
+(6, '3', '500', '511', '503', '11', '12', '2024-10-29', NULL, 1, '2024-09-28 16:25:00', '2024-10-13 05:59:57'),
 (7, '5', '0', '2', '2', '10', '14', '2024-10-12', 1, NULL, '2024-10-01 16:34:01', '2024-10-05 08:09:25'),
 (8, '6', '0', '2', '0', '2', '4', '2024-09-30', 1, NULL, '2024-10-01 17:11:17', '2024-10-05 06:22:52'),
-(9, '7', '0', '3', '2', '4', '6', '2024-10-30', 1, NULL, '2024-10-01 17:12:02', '2024-10-05 07:28:24'),
+(9, '7', '0', '3', '1', '4', '6', '2024-10-30', 1, NULL, '2024-10-01 17:12:02', '2024-10-13 05:59:57'),
 (10, '6', '0', '10', '10', '10', '12', '2024-10-07', NULL, NULL, '2024-10-05 06:32:29', '2024-10-05 08:09:41'),
 (11, '6', '10', '2', '12', '2', '4', '2024-10-22', NULL, NULL, '2024-10-06 10:41:02', '2024-10-06 10:41:02'),
 (12, '5', '2', '2', '4', '14', '15', '2024-10-07', NULL, NULL, '2024-10-06 10:48:50', '2024-10-06 10:48:50'),
-(13, '5', '4', '2', '6', '12', '14', '2024-10-08', NULL, NULL, '2024-10-06 10:49:30', '2024-10-06 10:49:30');
+(13, '5', '4', '2', '6', '12', '14', '2024-10-08', NULL, NULL, '2024-10-06 10:49:30', '2024-10-06 10:49:30'),
+(14, '8', '0', '110', '110', '3', '5', '2024-10-30', 1, NULL, '2024-10-07 11:18:59', '2024-10-07 11:18:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ic_subscriptions`
+--
+
+DROP TABLE IF EXISTS `ic_subscriptions`;
+CREATE TABLE IF NOT EXISTS `ic_subscriptions` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `invoice_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `month` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payable_amount` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `trx_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `active_status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` bigint UNSIGNED DEFAULT NULL,
+  `updated_by` bigint UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `month` (`month`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ic_subscriptions`
+--
+
+INSERT INTO `ic_subscriptions` (`id`, `invoice_no`, `month`, `payable_amount`, `trx_id`, `active_status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(18, '307', 'November24', '1200', 'erf34fg45', '1', 1, NULL, '2024-10-14 13:02:19', '2024-10-14 13:02:19'),
+(19, '258', 'October24', '1200', 'gfyh54fg45', '1', 1, NULL, '2024-10-14 17:04:27', '2024-10-14 17:04:27');
 
 -- --------------------------------------------------------
 
@@ -49413,12 +49541,13 @@ INSERT INTO `ic_system_countries` (`id`, `shortname`, `name`, `phonecode`, `crea
 
 DROP TABLE IF EXISTS `ic_system_settings`;
 CREATE TABLE IF NOT EXISTS `ic_system_settings` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `settings_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `settings_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_system_settings`
@@ -49428,8 +49557,9 @@ INSERT INTO `ic_system_settings` (`id`, `settings_key`, `settings_value`, `creat
 (2, 'paypal', '{\"paypal.baseUrl\":\"https:\\/\\/api-m.sandbox.paypal.com\\/v1\\/\",\"paypal.clientId\":\"AQPmEPhGLyOoMjjZ0Tmp-Ogs3ELCV0_OhQwmU5VrUV-X81TkWIrKd7_RhSR-6LhlPjHRUhKwAwSgY4v8\",\"paypal.secret\":\"ENHsEIGqf632C0G-lvkAgF7R9hS8WmtpaauQSBCPIbED4JGi5Z2vMY50tDHgaqcWTqZB36fN5hE2yJOY\"}', '2021-11-09 13:22:44', '2021-12-18 20:27:03'),
 (3, 'stripe', '{\"stripe.public_key\": \"pk_test_arr20NMmOPBNJWZCNBvTZib8\", \"stripe.secret_key\": \"sk_test_LJW4xs0DJs7SaxtDGbPhmhVC\"}', '2021-11-09 13:22:44', '2021-11-09 15:38:54'),
 (4, 'mail', '{\"mail.mailers.smtp.host\":\"smtp.mailtrap.io\",\"mail.mailers.smtp.port\":\"2525\",\"mail.mailers.smtp.encryption\":null,\"mail.mailers.smtp.username\":\"6cc148779dd1ca\",\"mail.mailers.smtp.password\":\"b030652c65de17\",\"mail.from.address\":\"info@itclanbd.com\",\"mail.from.name\":\"itclanbd\"}', '2021-11-09 14:08:43', '2023-03-20 05:25:35'),
-(5, 'general', '{\"site_title\":\"Pharmacy Management System\",\"timezone\":\"Asia\\/Dhaka\",\"currency_symbol\":\"\\u09f3\",\"default_tax\":\"0\",\"default_language\":\"en\",\"primary_color\":\"#13151f\",\"secondary_color\":\"#0bb5c1\",\"is_logo_show_in_invoice\":\"yes\",\"store_name\":\"Nova Pharmacy\",\"store_address\":\"Mirpur-12, Dhaka\",\"store_mobile\":\"01738305885\",\"store_website\":null,\"invoice_footer\":null,\"login_message_system\":\"Welcome To Restaurant Management Software\",\"site_logo\":\"http:\\/\\/127.0.0.1:8000\\/storage\\/settings\\/17269458041149.jpeg\",\"favicon\":\"http:\\/\\/127.0.0.1:8000\\/storage\\/settings\\/17269458046746.jpeg\",\"login_background\":\"https:\\/\\/restaurant.kikinbo.com\\/public\\/storage\\/settings\\/17252822594069.JPG\"}', '2021-12-18 20:27:03', '2024-10-05 07:25:20'),
-(0, 'product_setting', '{\"sku.auto\":\"yes\",\"sku.editable\":\"yes\",\"sku.prefix\":null,\"sku.suffix\":null}', '2023-03-20 05:25:35', '2023-03-20 05:25:35');
+(5, 'general', '{\"site_title\":\"Pharmacy Management System\",\"timezone\":\"Asia\\/Dhaka\",\"currency_symbol\":\"\\u09f3\",\"default_tax\":\"0\",\"default_language\":\"en\",\"primary_color\":\"#13151f\",\"secondary_color\":\"#0bb5c1\",\"is_logo_show_in_invoice\":\"yes\",\"store_name\":\"Nova Pharmacy\",\"store_address\":\"Mirpur-12, Dhaka\",\"store_mobile\":\"01738305885\",\"store_website\":null,\"invoice_footer\":null,\"login_message_system\":\"Welcome To Restaurant Management Software\",\"site_logo\":\"http:\\/\\/127.0.0.1:8000\\/storage\\/settings\\/17269458041149.jpeg\",\"favicon\":\"http:\\/\\/127.0.0.1:8000\\/storage\\/settings\\/17269458046746.jpeg\",\"login_background\":\"https:\\/\\/restaurant.kikinbo.com\\/public\\/storage\\/settings\\/17252822594069.JPG\",\"stock_control\":0}', '2021-12-18 20:27:03', '2024-10-14 09:47:31'),
+(6, 'product_setting', '{\"sku.auto\":\"yes\",\"sku.editable\":\"yes\",\"sku.prefix\":null,\"sku.suffix\":null}', '2023-03-20 05:25:35', '2023-03-20 05:25:35'),
+(11, 'subscription', '{\"month\":\"January24\",\"payable_amount\":\"1000\",\"trax_id\":\"fcg5cfgc2\",\"active_status\":\"1\"}', '2024-10-14 10:27:53', '2024-10-14 10:27:53');
 
 -- --------------------------------------------------------
 
@@ -53595,17 +53725,17 @@ CREATE TABLE IF NOT EXISTS `ic_users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ic_users`
 --
 
 INSERT INTO `ic_users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `otp`, `avatar`, `user_type`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '2021-08-17 13:16:37', '$2y$10$y6pa3ZIAwLB0XVIfPThp..01ACSYqXsL8ogmNyOTZZqJykX3/xXiG', NULL, '16368736053887.png', NULL, 'active', 'zzGTBiKDmM06YjPaTMPjH8wd1rVsijjbztNPYFBe5ec4mtS3Uc2JcqSon8Pj', '2021-08-17 13:16:37', '2024-08-18 08:28:29'),
+(1, 'Admin', 'admin@gmail.com', NULL, '2021-08-17 13:16:37', '$2y$10$y6pa3ZIAwLB0XVIfPThp..01ACSYqXsL8ogmNyOTZZqJykX3/xXiG', NULL, '16368736053887.png', NULL, 'active', 'FGOzhpsnQOVWrbrcL0poQsMXU5YEh9Nd0SAGUH0GOazhmApCCBYBAG3GgeMD', '2021-08-17 13:16:37', '2024-08-18 08:28:29'),
 (2, 'Md. Nazim', NULL, '01738305885', NULL, '$2y$10$Q20J4ISLigVzAZbsGm8lEOBBrbI2T/2r0l77iMUveYyVVnCc0YZIO', '824652', '1699335554-16779601226269.jpg', 'Customer', 'active', NULL, '2023-08-18 13:16:37', '2023-11-07 05:39:14'),
 (3, 'Mr. A', NULL, '01712345678', NULL, NULL, NULL, NULL, 'Customer', 'active', NULL, '2023-11-30 07:01:00', '2023-11-30 07:01:00'),
-(4, 'Boshir Ahammed', 'boshirkhan60@gmail.com', '+8801706358357', NULL, '$2y$10$lCTLwnhmK9EFBmEsWEMK7OQCks2nYVrPQhjzD9Dlg6bnCliLx2emq', NULL, NULL, NULL, 'active', NULL, '2024-09-10 12:41:29', '2024-09-10 12:41:29');
+(5, 'Boshir Ahammed', 'boshirkhan60@gmail.com', '+8801706358357', NULL, '$2y$10$3LAejnvvjCd/ZN1IWhxRgeQAweRT4g86weUDomZ5Rsf1DNQzL71H2', NULL, NULL, NULL, 'active', NULL, '2024-10-14 12:09:19', '2024-10-14 12:12:06');
 
 -- --------------------------------------------------------
 

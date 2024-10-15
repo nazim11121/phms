@@ -29,7 +29,7 @@ class InvoiceDataTable extends DataTable
                 $buttons = '';
 
                 if (auth()->user()->can('Edit User')) {
-                    $buttons .= '<a class="dropdown-item" href="' . route('admin.invoice.edit', $item->id) . '" title="Edit" onclick="openEditModal(this)" data-toggle="modal" data-target="#myEditModal" data-value="'.$item->id.'"><i class="mdi mdi-square-edit-outline"></i>' . __('custom.edit') . '</a>';
+                    $buttons .= '<a class="dropdown-item" href="' . route('admin.invoice.edit', $item->id) . '" title="Edit"><i class="mdi mdi-square-edit-outline"></i>' . __('custom.edit') . '</a>';
                 }
                 if (auth()->user()->can('Edit User')) {
                     $buttons .= '<form action="' . route('admin.invoice.destroy', $item->id) . '"  id="delete-form-' . $item->id . '" method="post">

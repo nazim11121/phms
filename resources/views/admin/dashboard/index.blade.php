@@ -15,7 +15,7 @@
     </div>
 
     <!-- ======== breadcump end ========  -->
-    @if($roleName=='Super Admin' || $roleName=='Admin')
+    @if($roleName=='Super Admin' || $roleName=='Admin' || $roleName=='Admin2')
     <div class="ic-section-gap" >
         <div class="row">
             @can('Total Customer')

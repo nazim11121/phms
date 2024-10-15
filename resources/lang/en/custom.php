@@ -733,4 +733,9 @@ return [
     'staffSalary' => 'Staff Salary List',
     'kitchen' => 'Kitchen',
     'online_delivery_order' => 'Online Delivery Order',
+
+    'subscription' => 'Subscription',
+    'payable_amount' => 'Payable Amount',
+    'trxId' => 'Transaction Id',
+    'active_status' => 'Active Status',
 ];

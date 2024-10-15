@@ -66,10 +66,12 @@ class InvoiceController extends Controller
         $brands = Brand::where('status','Active')->get();
         $types = Type::where('status','Active')->get();
         $supliers = Suplier::where('status','Active')->get();
+        $settings = SystemSettings::all();
+        $stockControl = $settings[3]['settings_value']['stock_control'];
 
         $medicineList = MedicineAdd::with(['stock','stocks','group','brand','type','suplier'])->where('status','Active')->get();
 
-        return view('admin.invoice.create', compact('medicineList','groups','brands','types','supliers'));
+        return view('admin.invoice.create', compact('medicineList','groups','brands','types','supliers','stockControl'));
     }
 
     public function addToCart(Request $request)
@@ -195,13 +197,52 @@ class InvoiceController extends Controller
     {
         set_page_meta(__t('edit') . ' ' . __t('medicine'));
 
-        $medicine = MedicineAdd::with('stock')->find($id);
+        $medicineList = MedicineAdd::with(['stock','stocks','group','brand','type','suplier'])->where('status','Active')->get();
         $groups = Group::where('status','Active')->get();
         $brands = Brand::where('status','Active')->get();
         $types = Type::where('status','Active')->get();
         $supliers = Suplier::where('status','Active')->get();
+        $invoice = Invoice::with('sku')->find($id);
 
-        return response()->json(['medicine'=>$medicine,'groups'=>$groups,'brands'=>$brands,'types'=>$types,'supliers'=>$supliers]);
+        return view('admin.invoice.edit', compact(['invoice','medicineList','groups','brands','types','supliers']));
+    }
+
+    // Update cart item quantity
+    public function updateCart(Request $request)
+    {
+        if ($request->id && $request->quantity) { 
+            $cart = Invoice::with('sku','sku.medicine')->where('id',$request->invoice)->get();
+            if (isset($cart['0']['sku'][$request->id])) {
+                $cart['0']['sku'][$request->id]['quantity'] = $request->quantity;
+                session()->put('cart', $cart);
+            }
+
+            $grandTotal = $this->calculateGrandTotal($cart, session()->get('discount', 0));
+            
+            return response()->json(['cart' => $cart, 'grandTotal' => $grandTotal]);
+        }
+    }
+
+    public function applyDiscount(Request $request)
+    {
+        $discount = $request->discount ?? 0;
+        session()->put('discount', $discount);
+
+        $cart = session()->get('cart', []);
+        $grandTotal = $this->calculateGrandTotal($cart, $discount);
+
+        return response()->json(['grandTotal' => $grandTotal]);
+    }
+
+    // Calculate grand total with discount
+    private function calculateGrandTotal($cart, $discount)
+    {
+        $total = 0;
+        foreach ($cart['0']['sku'] as $item) {
+            $total += $item->price * $item->quantity;
+        }
+        $grandTotal = $total - ($total * ($discount / 100)); // Apply discount
+        return $grandTotal;
     }
 
     public function update(Request $request): RedirectResponse

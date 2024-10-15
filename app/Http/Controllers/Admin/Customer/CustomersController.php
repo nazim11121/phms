@@ -39,10 +39,10 @@ class CustomersController extends Controller
         $this->userService  = $userService;
         $this->roleService  = $roleService;
 
-        $this->middleware(['permission:List User'])->only(['index']);
-        $this->middleware(['permission:Add User'])->only(['create']);
-        $this->middleware(['permission:Edit User'])->only(['edit']);
-        $this->middleware(['permission:Delete User'])->only(['destroy']);
+        $this->middleware(['permission:List Customer'])->only(['index']);
+        $this->middleware(['permission:Add Customer'])->only(['create']);
+        $this->middleware(['permission:Edit Customer'])->only(['edit']);
+        $this->middleware(['permission:Delete Customer'])->only(['destroy']);
     }
 
     /**

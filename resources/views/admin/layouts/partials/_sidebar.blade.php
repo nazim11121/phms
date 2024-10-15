@@ -88,25 +88,25 @@
                         </span>
                     </a>
                     <ul class="submenu">
-                        @can('User')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/medicine/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.medicine.index')}}">{{ __('Medicine Entry') }}</a>
                         </li>
                         @endcan
-                        @can('User')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/group/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.group.index')}}">{{ __('Group') }}</a>
                         </li>
                         @endcan
-                        @can('Role')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/brand/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.brand.index')}}">{{ __('Brand') }}</a></li>
                         @endcan
-                        @can('Role')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/type/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.type.index')}}">{{ __('Type') }}</a></li>
                         @endcan
-                        @can('User')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/suplier/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.suplier.index')}}">{{ __('Supplier') }}</a>
                         </li>
@@ -132,16 +132,16 @@
                         </span>
                     </a>
                     <ul class="submenu">
-                        @can('User')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/staff/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.staff.index')}}">{{ __('custom.list') }}</a>
                         </li>
                         @endcan
-                        @can('Role')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/staff/create/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.staff.create')}}">{{ __('custom.add') }}</a></li>
                         @endcan
-                        @can('Role')
+                        @can('Customer')
                         <li class="{{ request()->is('admin//staff/list/staff-salary/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.staff.salary.list')}}">{{ __('Staff Salary') }}</a></li>
                         @endcan
@@ -159,7 +159,7 @@
                 @endcanany
 
                 @can('Customer')
-                <li class="{{ request()->is('admin/customers') ? 'mm-active' : '' }}">
+                <li class="{{ request()->is('admin/purchase') ? 'mm-active' : '' }}">
                     <a href="{{ route('admin.purchase.index') }}" class=""><i class="mdi mdi-store"></i><span> {{
                             __('Purchase List') }}
                         </span>
@@ -184,16 +184,16 @@
                         </span>
                     </a>
                     <ul class="submenu">
-                        @can('User')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/account/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.account.credited')}}">{{ __('Total Credit') }}</a>
                         </li>
                         @endcan
-                        @can('Role')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/offline-record/create/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.account.dedited')}}">{{ __('Debit by Staff&CEO') }}</a></li>
                         @endcan
-                        @can('Role')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/account/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.account.balance')}}">{{ __('Balance') }}</a></li>
                         @endcan
@@ -218,17 +218,17 @@
                         </span>
                     </a>
                     <ul class="submenu">
-                        @can('User')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/reports/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.reports.stock')}}">{{ __('Stock Report') }}</a>
                         </li>
                         @endcan
-                        @can('User')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/reports/*') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.reports.daywise')}}">{{ __('Day Wise') }}</a>
                         </li>
                         @endcan
-                        @can('Role')
+                        @can('Customer')
                         <li class="{{ request()->is('admin/reports/monthwise/') ? 'mm-active' : '' }}"><a
                                 href="{{route('admin.reports.monthwise')}}">{{ __('Monthly') }}</a></li>
                         @endcan

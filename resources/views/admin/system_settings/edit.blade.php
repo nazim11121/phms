@@ -5,8 +5,9 @@
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
-            <div class="col-sm-6">
-                <h4 class="page-title">{{__('custom.general')}} {{ __('custom.settings') }}</h4>
+            <div class="col">
+                <h4 class="page-title float-left text-white">{{__('custom.general')}} {{ __('custom.settings') }}</h4>
+                <p class="float-right m-auto">Warning: Used only system Admistration</p>
                 <!-- <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#" class="ic-javascriptVoid">{{ __('custom.settings') }}</a>
                     </li>
@@ -31,6 +32,11 @@
                                 <a class="nav-link" id="pills-login-tab" data-toggle="pill" href="#pills-login"
                                    role="tab"
                                    aria-controls="pills-login" aria-selected="true">{{ __('custom.login') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-subscription-tab" data-toggle="pill" href="#pills-subscription"
+                                   role="tab"
+                                   aria-controls="pills-subscription" aria-selected="true">{{ __('custom.subscription') }}</a>
                             </li>
                             <li class="nav-item" hidden>
                                 <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
@@ -206,6 +212,17 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>{{ __('Stock Control') }}</label>
+                                            <div class="col-6">
+                                                <input type="checkbox" name="general[stock_control]"
+                                                    class="form-control w-30"
+                                                    value="1" {{ $settings['general']['stock_control'] ? 'checked':'' }}>
+                                            </div><span>*Note: If checked, product stock not affect to invoice.</span>
+                                        </div>
+                                    </div>
+
                                     <div class="col-6" hidden>
                                         <div class="form-group">
                                             <label>{{ __('custom.invoice_footer') }}</label>
@@ -216,7 +233,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!-- Login Tab -->
                             <div class="tab-pane fade show" id="pills-login" role="tabpanel"
                                  aria-labelledby="pills-login-tab">
                                 <h5 class="card-title text-muted">{{__('custom.login')}} {{ __('custom.info') }}</h5>
@@ -360,7 +377,60 @@
 
                                 </div>
                             </div>
-
+                            <!-- Subscription Tab Start -->
+                            <div class="tab-pane fade show" id="pills-subscription" role="tabpanel"
+                                    aria-labelledby="pills-subscription-tab">
+                                    <h5 class="card-title text-muted">{{__('custom.subscription')}} {{ __('custom.info') }}</h5>
+                                    @csrf
+                                    @can('subscription-btn')
+                                    <div><label class="switch"><input type="checkbox" name="subscription[editable]" id="toggleBtn" class="form-control w-30" value="1"><span class="slider2 round"></span><label></div>
+                                    @endcan
+                                <form id="form">    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>{{ __('custom.month') }}</label>
+                                                
+                                                <select name="subscription[month]" id="month" class="form-control select2" disabled>
+                                                    <option value="">Select one...</option>
+                                                    @php $year=date('y')@endphp
+                                                    <option value="January{{date('y')}}" {{$currentSubscription->month == "January$year" ? 'selected':'' }}>January{{date('y')}}</option>
+                                                    <option value="February{{date('y')}}" {{$currentSubscription->month == "February$year" ? 'selected':'' }}>February{{date('y')}}</option>
+                                                    <option value="March{{date('y')}}" {{$currentSubscription->month == "March$year" ? 'selected':'' }}>March{{date('y')}}</option>
+                                                    <option value="April{{date('y')}}" {{$currentSubscription->month == "April$year" ? 'selected':'' }}>April{{date('y')}}</option>
+                                                    <option value="May{{date('y')}}" {{$currentSubscription->month == "May$year" ? 'selected':'' }}>May{{date('y')}}</option>
+                                                    <option value="Jun{{date('y')}}" {{$currentSubscription->month == "Jun$year" ? 'selected':'' }}>Jun{{date('y')}}</option>
+                                                    <option value="July{{date('y')}}" {{$currentSubscription->month == "July$year" ? 'selected':'' }}>July{{date('y')}}</option>
+                                                    <option value="August{{date('y')}}" {{$currentSubscription->month == "August$year" ? 'selected':'' }}>August{{date('y')}}</option>
+                                                    <option value="September{{date('y')}}" {{$currentSubscription->month == "September$year" ? 'selected':'' }}>September{{date('y')}}</option>
+                                                    <option value="October{{date('y')}}" {{$currentSubscription->month == "October$year" ? 'selected':'' }}>October{{date('y')}}</option>
+                                                    <option value="November{{date('y')}}" {{$currentSubscription->month == "November$year" ? 'selected':'' }}>November{{date('y')}}</option>
+                                                    <option value="December{{date('y')}}" {{$currentSubscription->month == "December$year" ? 'selected':'' }}>December{{date('y')}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                                <div class="form-group">
+                                                <label>{{ __('custom.payable_amount') }}</label>
+                                                <input type="number" name="subscription[payable_amount]" id="payable_amount" value="{{$currentSubscription->payable_amount}}" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>{{ __('custom.trxId') }}</label>
+                                                <input type="text" name="subscription[trax_id]" id="trax_id" value="{{$currentSubscription->trx_id}}" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>{{ __('custom.active_status') }}</label>
+                                                <input type="checkbox" name="subscription[active_status]" id="active_status" class="form-control w-30" value="1"{{$currentSubscription->active_status==1?'checked':''}} disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>    
+                            </div>
+                            <!-- Subscription Tab End -->
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                                  aria-labelledby="pills-profile-tab">
                                 <h5 class="card-title text-muted">{{ __('custom.paypal') }}</h5>
@@ -569,8 +639,105 @@
 @endsection
 
 @push('style')
+<style>
+        p {
+            color: transparent;
+            animation: effect 2s linear infinite;
+        }
+ 
+        @keyframes effect {
+            0% {
+                background: linear-gradient(#ff1414, #ff5f5f);
+                -webkit-background-clip: text;
+            }
+ 
+            100% {
+                background: linear-gradient(#3CE7D7, #000FFF);
+                -webkit-background-clip: text;
+            }
+        }
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    }
+
+    .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+    }
+
+    .slider2 {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider2:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    input:checked + .slider2 {
+    background-color: #2196F3;
+    }
+
+    input:focus + .slider2 {
+    box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider2:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider2.round {
+    border-radius: 34px;
+    }
+
+    .slider2.round:before {
+    border-radius: 50%;
+    }
+</style>
 @endpush
 
 @push('script')
+<script>
+    $(document).ready(function() {
+        let isDisabled = true;
 
+        $('#toggleBtn').click(function() {
+            isDisabled = !isDisabled;
+
+            // $('form input').prop('disabled', isDisabled);
+            $('#month').prop('disabled', isDisabled);
+            $('#payable_amount').prop('disabled', isDisabled);
+            $('#trax_id').prop('disabled', isDisabled);
+            $('#active_status').prop('disabled', isDisabled);
+            
+            if (isDisabled) {
+                $('#toggleBtn').text('Enable Inputs');
+            } else {
+                $('#toggleBtn').text('Disable Inputs');
+            }
+        });
+    });
+</script>
 @endpush
